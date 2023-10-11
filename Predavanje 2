@@ -463,3 +463,116 @@ nuz = np.array([1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9])
 mod_result = mod(nuz)
 print(mod_result)
 
+# R
+Razmatramo pojmove središnje tendencije i raspršenosti podataka u statistici. Središnja tendencija je mjera koja opisuje centralnu ili tipičnu vrijednost u skupu podataka, dok je raspršenost mjera koja opisuje varijaciju podataka i koliko su raznolike vrijednosti.
+
+Razmotrimo primjer s nizovima podataka:
+
+Prvi niz podataka: 8, 9, 9, 10, 10, 10, 10, 11, 11, 12
+Drugi niz podataka: 1, 2, 5, 8, 10, 10, 12, 15, 18, 19
+
+Prvi niz podataka je prilično koncentriran oko vrijednosti 10, što ukazuje na malu raspršenost podataka. Drugi niz podataka je znatno raznolikiji, što znači da ima veću raspršenost.
+
+Unatoč razlici u raspršenosti, i aritmetička sredina i medijan oba niza podataka su 10. To nas podsjeća da iako te mjere pružaju informacije o središnjoj tendenciji, ne govore nam ništa o raspršenosti podataka. Da bismo bolje razumjeli podatke, trebamo razmotriti i druge statističke mjere koje opisuju raspršenost, kao što su varijanca i standardna devijacija.
+
+uski <- c(8, 9, 9, 10, 10, 10, 10, 11, 11, 12)
+siroki <- c(1, 2, 5, 8, 10, 10, 12, 15, 18, 19)
+
+mean(uski) # 10
+mean(siroki) # 10
+
+median(uski) # 10
+median(siroki) # 10
+
+Mod(uski) # 10
+Mod(siroki) # 10
+
+# PYTHON
+import statistics
+
+uski = [8, 9, 9, 10, 10, 10, 10, 11, 11, 12]
+siroki = [1, 2, 5, 8, 10, 10, 12, 15, 18, 19]
+
+mean_uski = statistics.mean(uski)
+mean_siroki = statistics.mean(siroki)
+
+median_uski = statistics.median(uski)
+median_siroki = statistics.median(siroki)
+
+# Mod u Pythonu ne postoji u Numpy-ju kao u R-u, pa ćemo koristiti svoju funkciju za računanje moda.
+def mod(niz):
+    brojac = {}
+    for value in niz:
+        if value in brojac:
+            brojac[value] += 1
+        else:
+            brojac[value] = 1
+
+    max_frekvencija = max(brojac.values())
+    moda = [value for value, frekvencija in brojac.items() if frekvencija == max_frekvencija]
+
+    return mod
+
+mod_uski = mod(uski)
+mod_siroki = mod(siroki)
+
+print(f"Srednja vrijednost uskog niza: {mean_uski}")
+print(f"Srednja vrijednost širokog niza: {mean_siroki}")
+
+print(f"Medijan uskog niza: {median_uski}")
+print(f"Medijan širokog niza: {median_siroki}")
+
+print(f"Mod uskog niza: {mod_uski}")
+print(f"Mod širokog niza: {mod_siroki}")
+
+# R
+Razmatramo različite mjere koje nam pomažu da razumijemo raznolikost i središnje tendencije podataka. Jedna od tih mjera je raspon (range), koji se definira kao razlika između maksimalne i minimalne vrijednosti u nizu podataka. Druga važna mjera je varijanca (variance), koja mjeri koliko su pojedine vrijednosti u nizu razdvojene od srednje vrijednosti. Pomoću varijance možemo bolje razumjeti raspršenost podataka.
+
+Raspon se računa kao:
+
+range = max(x_1, x_2, ..., x_n) - min(x_1, x_2, ..., x_n)
+
+Za primjer, izračunat ćemo raspon i varijancu za dva različita niza podataka: "uski" i "siroki".
+uski <- c(8, 9, 9, 10, 10, 10, 10, 11, 11, 12)
+siroki <- c(1, 2, 5, 8, 10, 10, 12, 15, 18, 19)
+
+# Računanje raspona
+range_uski <- max(uski) - min(uski)
+range_siroki <- max(siroki) - min(siroki)
+
+# Računanje varijance
+variance_uski <- var(uski)
+variance_siroki <- var(siroki)
+
+range_uski
+range_siroki
+
+variance_uski
+variance_siroki
+
+Rezultat je:
+
+Za "uski" niz: Raspon = 4, Varijanca = 1.333333
+Za "siroki" niz: Raspon = 18, Varijanca = 38.66667
+
+# Python
+Razmotrimo različite mjere koje pomažu razumjeti raznolikost i središnje tendencije podataka. Jedna od tih mjera je raspon (range), koji se definira kao razlika između maksimalne i minimalne vrijednosti u nizu podataka. Druga važna mjera je varijanca (variance), koja mjeri koliko su pojedine vrijednosti u nizu razdvojene od srednje vrijednosti. Pomoću varijance možemo bolje razumjeti raspršenost podataka.
+
+Raspon se računa kao: range = max(x_1, x_2, ..., x_n) - min(x_1, x_2, ..., x_n)
+import numpy as np
+
+uski = np.array([8, 9, 9, 10, 10, 10, 10, 11, 11, 12])
+siroki = np.array([1, 2, 5, 8, 10, 10, 12, 15, 18, 19])
+
+# Računanje raspona
+range_uski = np.max(uski) - np.min(uski)
+range_siroki = np.max(siroki) - np.min(siroki)
+
+# Računanje varijance
+variance_uski = np.var(uski, ddof=1)  # ddof=1 za nepristranu varijancu
+variance_siroki = np.var(siroki, ddof=1)
+
+print("Za uski niz: Raspon =", range_uski, ", Varijanca =", variance_uski)
+print("Za siroki niz: Raspon =", range_siroki, ", Varijanca =", variance_siroki)
+
+## DOŠA SAN DO VARIJANCE NA 31. STRANICI
