@@ -262,3 +262,5 @@ print(cumulative_frequencies_df)
 A              0.8
 AB             0.9
 B              1.0
+
+# FRMA SAN NA 2.1.3
