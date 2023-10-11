@@ -337,3 +337,5 @@ print(kvant.dtypes)
 # Prikaz tablice frekvencija visine
 visina_counts = kvant['Visina'].value_counts()
 print(visina_counts)
+
+# DIO 2.2 NE SADRŽI NIKAKVE PROGRAMSKE DJELOVE
