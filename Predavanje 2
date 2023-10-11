@@ -434,3 +434,32 @@ unique_values, counts = np.unique(nuz, return_counts=True)
 max_count = np.max(counts)
 mod_values = unique_values[counts == max_count]
 print(mod_values)
+
+# R
+U R-u se mogu definirati vlastite korisnički definirane funkcije. U donjem primjeru, definirana je jednostavna funkcija Mod(), koja ima jedan argument i računa mod numeričkog vektora:
+Mod <- function(x) {
+  as.numeric(names(table(x))[table(x) == max(table(x))])
+}
+
+Ova funkcija uzima vektor x kao ulazni argument. Prvo koristi funkciju table(x) kako bi izračunala frekvenciju pojavljivanja svake vrijednosti u vektoru. Zatim koristi names() kako bi dobila imena (vrijednosti) koje imaju maksimalnu frekvenciju. Konačno, pretvara rezultat u numerički format pomoću as.numeric().
+
+Primjer korištenja funkcije:
+
+nuz <- c(1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9)
+mod_result <- Mod(nuz)
+print(mod_result)
+
+# Python
+U Pythonu, također možemo korisnički definirati funkciju za mod. To možemo napraviti na slijedeći način: 
+import numpy as np
+
+def mod(x):
+    unique, counts = np.unique(x, return_counts=True)
+    max_count = np.max(counts)
+    mode_values = unique[counts == max_count]
+    return mode_values
+
+nuz = np.array([1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9])
+mod_result = mod(nuz)
+print(mod_result)
+
