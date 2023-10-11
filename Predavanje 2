@@ -364,6 +364,7 @@ print(result)  # Output: 20.0
 # Uklanjanje vrijednosti 89 i ponovno računanje aritmetičke sredine
 x = x[x != 89]
 
-# R medijan 
 result = np.mean(x)
 print(result)  # Output: 11.375
+
+# R medijan
