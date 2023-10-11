@@ -71,3 +71,80 @@ spol_counts = krgrupa['Spol'].value_counts()
 print(spol_counts)
 
 Ovaj Python kod koristi funkciju value_counts() za izračun frekvencije pojavljivanja svake vrijednosti u stupcu 'Spol' u DataFrame-u "krgrupa". Nakon izvođenja koda, dobit ćete rezultat koji prikazuje frekvenciju pojave "M" i "Ž".
+
+# R
+Na sljedeći način možemo prikazati frekvenciju pojavljivanja pojedinih krvnih grupa među osobama za koje su dostavljeni podaci:
+
+table(krgrupa$Krvna_grupa)
+
+Rezultat će biti:
+  0   A  AB   B 
+  4   4   1   1
+
+Kako su nam podaci spremljeni u dataframeove možemo dobiti i zajednički tablični pregled danih podataka po spolu i krvnoj grupi
+
+table(krgrupa)Krvna_grupaSpol 
+
+          Krvna_grupa
+Spol       0  A  AB  B
+   M       1  2   1  1
+   Ž       3  2   0  0
+
+# Python
+U Pythonu možemo dobiti ekvivalent koristeći pandas
+import pandas as pd
+
+data = {
+    'Spol': ["Ž", "M", "M", "Ž", "Ž", "M", "M", "Ž", "M", "Ž"],
+    'Krvna_grupa': ["A", "0", "B", "0", "0", "A", "AB", "0", "A", "A"]
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Tablični pregled po krvnoj grupi
+krvna_grupa_table = pd.crosstab(krgrupa['Krvna_grupa'], krgrupa['Spol'])
+
+print(krvna_grupa_table)
+
+Spol       M  Ž
+Krvna_grupa      
+0           1  3
+A           2  2
+AB          1  0
+B           1  0
+
+# R
+Tablice relativnih frekvencija za krvne grupe dobivamo tako da frekvenciju pojedinih krvnih grupa dijelimo s ukupnim brojem dostupnih podataka. Možemo definirati novu varijablu "relk" kako slijedi:
+
+relk <- krgrupa$Krvna_grupa / nrow(krgrupa)
+
+Onda možemo primijeniti funkciju "table" kako bismo dobili tablicu relativnih frekvencija, no možemo i jednostavnije:
+
+table(krgrupa$Krvna_grupa) / nrow(krgrupa)
+
+Rezultat će izgledati ovako:
+   0      A   AB    B 
+  0.4    0.4  0.1   0.1
+
+# Python
+Tablice relativnih frekvencija za krvne grupe dobivamo tako da frekvenciju pojedinih krvnih grupa dijelimo s ukupnim brojem dostupnih podataka. Koristit ćemo biblioteku Pandas
+import pandas as pd
+
+data = {
+    'Krvna_grupa': ["0", "A", "AB", "B"],
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Izračun relativnih frekvencija za krvne grupe
+relk = krgrupa['Krvna_grupa'].value_counts() / len(krgrupa)
+
+print(relk)
+
+Ovaj Python kod koristi funkciju value_counts() i dijeli rezultate s ukupnim brojem dostupnih podataka kako bi dobio relativne frekvencije krvnih grupa.
+
+0      0.4
+A      0.4
+AB     0.1
+B      0.1
+Name: Krvna_grupa, dtype: float64
