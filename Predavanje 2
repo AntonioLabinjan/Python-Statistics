@@ -148,3 +148,117 @@ A      0.4
 AB     0.1
 B      0.1
 Name: Krvna_grupa, dtype: float64
+
+# R
+U nekim situacijama, koristimo svojstvo R-a da možemo vršiti operacije nad jedinstvenim elementima objekta, a to je korisno kada radimo s tablicama. 
+U ovom slučaju, uočavamo da R u svojoj osnovnoj verziji ispisuje tablice horizontalno. Međutim, ponekad je preglednije ispisati tablice vertikalno. Kako bi olakšali ovaj zadatak i poboljšali prikaz tablica, možemo koristiti paket "plyr".
+
+library("plyr")
+count(krgrupa, "Krvna_grupa")
+
+Ovaj kod koristi "plyr" paket kako bi ispisao tablicu vertikalno, prikazujući frekvenciju svake krvne grupe. Rezultat će izgledati ovako:
+
+  Krvna_grupa freq
+1           0    4
+2           A    4
+3          AB    1
+4           B    1
+
+Ovako ćemo dobiti pregledniji prikaz frekvencija krvnih grupa u tablici "krgrupa".
+
+# Python
+U  Pythonu se ponovno koristi Pandas
+import pandas as pd
+
+data = {
+    'Krvna_grupa': ["0", "A", "AB", "B"],
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Koristimo funkciju value_counts() za dobivanje frekvencije svake krvne grupe
+frekvencije = krgrupa['Krvna_grupa'].value_counts().reset_index()
+frekvencije.columns = ['Krvna_grupa', 'freq']
+
+print(frekvencije)
+
+Ovaj Python kod koristi value_counts() da dobije frekvenciju svake krvne grupe i zatim koristi reset_index() i columns kako bi formatirao tablicu. 
+Nakon izvođenja koda, dobit ćete ekvivalentan pregled frekvencija krvnih grupa kao što ste imali u R-u:
+
+  Krvna_grupa  freq
+0           0     4
+1           A     4
+2          AB     1
+3           B     1
+
+# R
+S obzirom na to da postoji drugi paket, poput Display, koji omogućava dodatno prilagođavanje tabličnog prikaza, možemo koristiti njegove funkcionalnosti kako bismo bolje prilagodili prikaz tablica.
+Nakon toga, korištenjem osnovne R funkcije barplot(), možemo vizualizirati tablicu frekvencija krvnih grupa. 
+Na taj način, tablicu frekvencija krvnih grupa možemo prikazati jednostavnom grafikonom, kao što je prikazano na donjoj slici. 
+Kao i kod drugih funkcija za grafički prikaz podataka, možemo prilagoditi parametre slike kako bismo kontrolirali izgled grafikona. U slučaju prikaza frekvencija krvnih grupa, možemo smanjiti veličinu fonta ili promijeniti naziv grafa na "Stupčasti prikaz frekvencija krvnih grupa".
+
+par(mar=c(2,2,2,1))
+barplot(table(krgrupa$Krvna_grupa),
+        main="Stupčasti prikaz frekvencije krvnih grupa",
+        cex.axis=0.7,
+        cex.names=0.7,
+        cex.main=0.7)
+
+# Python
+U Pythonu ćemo koristiti Pandas i Matplotlib za grafički prikaz podataka:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {
+    'Krvna_grupa': ["0", "A", "AB", "B"],
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Kreiranje grafikona stupčaste frekvencije
+plt.figure(figsize=(6, 4))  # Postavljanje veličine grafikona
+plt.bar(krgrupa['Krvna_grupa'].value_counts().index, krgrupa['Krvna_grupa'].value_counts(), color='skyblue')
+plt.title("Stupčasti prikaz frekvencije krvnih grupa")  # Naslov grafikona
+plt.xlabel("Krvna grupa")  # X-osa
+plt.ylabel("Broj osoba")  # Y-osa
+plt.xticks(rotation=0)  # Rotacija oznaka na X-osi
+plt.tight_layout()
+
+plt.show()  # Prikaz grafikona
+
+
+# R
+S vremena na vrijeme, osim tablice relativnih frekvencija, prikazivanje tablice kumulativnih relativnih frekvencija može biti relevantno. Tablicu kumulativnih relativnih frekvencija možemo jednostavno stvoriti koristeći jednu od osnovnih R-ovih funkcija, cumsum, koja izračunava kumulativni zbroj danog niza elemenata. Da ne bude zabune, ako imamo brojeve 1, 3 i 5, onda je kumulativni zbroj prvih dva broja 4, dok je kumulativni zbroj svih tri broja 9.
+
+Primjer tablice kumulativnih relativnih frekvencija za krvne grupe (prema prethodnim podacima) je naveden u nastavku:
+
+cumsum(table(krgrupa$Krvna_grupa) / nrow(krgrupa))
+
+Ova tablica govori da 40% ispitanika ima krvnu grupu 0, 80% ispitanika ima krvnu grupu 0 ili A, te 90% ispitanika ima barem jednu od krvnih grupa 0, A ili B.
+0          A          AB             B
+0.4           0.8           0.9           1.0
+
+# Python
+Python kod pandas za izračun kumulativnih relativnih frekvencija i stvara DataFrame s kumulativnim frekvencijama. Nakon izvođenja koda, dobit ćemo ekvivalentnu tablicu kumulativnih relativnih frekvencija kao što smo imali u R-u
+import pandas as pd
+
+data = {
+    'Krvna_grupa': ["0", "A", "AB", "B"],
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Izračun kumulativnih relativnih frekvencija
+relative_frequencies = krgrupa['Krvna_grupa'].value_counts(normalize=True).sort_index()
+cumulative_frequencies = relative_frequencies.cumsum()
+
+# Dodajte kumulativne relativne frekvencije u novi stupac 'Cumulative_Freq'
+cumulative_frequencies_df = pd.DataFrame(cumulative_frequencies, columns=['Cumulative_Freq'])
+
+print(cumulative_frequencies_df)
+
+  Cumulative_Freq
+0              0.4
+A              0.8
+AB             0.9
+B              1.0
