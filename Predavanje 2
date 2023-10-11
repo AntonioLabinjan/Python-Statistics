@@ -368,3 +368,33 @@ result = np.mean(x)
 print(result)  # Output: 11.375
 
 # R medijan
+Medijan je statistička mjera središnje tendencije koja predstavlja srednju vrijednost unutar poretka podataka.
+U R-u, medijan se može izračunati pomoću funkcije median(). Evo primjera i objašnjenja kako se koristi medijan:
+
+# Primjer izračunavanja medijana
+# Prvo, koristimo ugrađenu funkciju median() za izračun medijana za cijeli niz podataka
+median(c(24, 5, 9, 12, 22, 2, 89, 4, 13))[1]  # Output: 12
+
+# Ako uklonimo vrijednost 89 iz niza 'x' i ponovno izračunamo medijan, dobivamo:
+median(x)[1]  # Output: 10.5
+
+U ovom primjeru, medijan originalnog niza (24, 5, 9, 12, 22, 2, 89, 4, 13) iznosi 12. Nakon što izbacimo vrijednost 89 i ponovno izračunamo medijan, dobivamo medijan vrijednosti 10.5.
+
+Medijan je koristan za mjerenje središnje tendencije, a posebno je koristan kada imate outliers (ekstremne vrijednosti) u vašim podacima, jer neće biti toliko osjetljiv na te ekstremne vrijednosti kao aritmetička sredina. 
+Medijan je vrijednost koja dijeli vaše podatke na dvije jednake polovice, tako da je polovina vaših podataka manja od medijana, a polovina veća.
+
+# Python medijan
+U Pythonu koristimo funkciju median() iz biblioteke NumPy za izračun medijana. Prvo, izračunavamo medijan za originalni niz podataka, a zatim izračunavamo medijan za niz x nakon što smo iz njega izbacili vrijednost 89.
+
+import numpy as np
+
+# Primjer izračunavanja medijana
+# Prvo, koristimo funkciju median() iz biblioteke NumPy za izračun medijana za cijeli niz podataka
+data = [24, 5, 9, 12, 22, 2, 89, 4, 13]
+median_value = np.median(data)
+print(median_value)  # Output: 12.0
+
+# Ako uklonimo vrijednost 89 iz niza 'x' i ponovno izračunamo medijan, dobivamo:
+x = [value for value in x if value != 89]
+median_x = np.median(x)
+print(median_x)  # Output: 10.5
