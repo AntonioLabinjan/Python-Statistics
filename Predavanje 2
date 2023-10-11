@@ -398,3 +398,39 @@ print(median_value)  # Output: 12.0
 x = [value for value in x if value != 89]
 median_x = np.median(x)
 print(median_x)  # Output: 10.5
+
+#R mod
+Mod je statistička mjera koja predstavlja vrijednost koja se najčešće pojavljuje u nizu brojeva. Da bismo izračunali mod niza brojeva u R-u, koristimo funkciju table() za stvaranje tablice frekvencija svakog broja u nizu, a zatim koristimo funkciju names() kako bismo dobili vrijednosti koje imaju najveću frekvenciju. No, primijetimo da su vrijednosti koje vraća names() u obliku znakova (character), pa ih trebamo pretvoriti u numerički format kako bismo dobili mod. Slijedi R kod koji to obavlja:
+# Stvaranje uzorka brojeva
+nuz <- c(1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9)
+
+# Izračunavanje moda niza brojeva
+mod_values <- as.numeric(names(table(nuz))[table(nuz) == max(table(nuz))])
+print(mod_values)
+
+# Python mod
+U Pythonu mod možemo izračunati pomoću biblioteke statistics:
+
+import statistics
+
+# Stvaranje uzorka brojeva
+nuz = [1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9]
+
+# Izračunavanje moda niza brojeva
+mod_values = statistics.multimode(nuz)
+print(mod_values)
+
+Ovaj kod koristi funkciju multimode() iz statistics biblioteke kako bi pronašao sve vrijednosti koje se pojavljuju najčešće u nizu. Rezultat će sadržavati sve takve mod vrijednosti koje se pojavljuju u nizu nuz
+
+Postoji alternativni način, pomoću numpyja:
+
+import numpy as np
+
+# Stvaranje uzorka brojeva
+nuz = np.array([1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 8, 9])
+
+# Pronalazak mod vrijednosti
+unique_values, counts = np.unique(nuz, return_counts=True)
+max_count = np.max(counts)
+mod_values = unique_values[counts == max_count]
+print(mod_values)
