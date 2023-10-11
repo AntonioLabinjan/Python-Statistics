@@ -1,0 +1,73 @@
+# Prije djela 2.1.2 nema programskih kodova
+
+# R
+Pogledajmo kako bismo u R-u napravili iste tablice i prikazali podatke grafički. Prvo ćemo prevesti tablicu s originalno dobivenim podacima u R data frame, kojeg ćemo nazvati "krgrupa".
+
+Spol <- c("Ž", "M", "M", "Ž", "Ž", "M", "M", "Ž", "M", "Ž")
+Krvna_grupa <- c("A", "0", "B", "0", "0", "A", "AB", "0", "A", "A")
+krgrupa <- data.frame(Spol, Krvna_grupa)
+
+Nakon stvaranja data frame-a, tablica "krgrupa" izgleda ovako: 
+   Spol Krvna_grupa
+1     Ž           A
+2     M           0
+3     M           B
+4     Ž           0
+5     Ž           0
+6     M           A
+7     M          AB
+8     Ž           0
+9     M           A
+10    Ž           A
+
+Sada možemo analizirati podatke. Prvo ćemo upotrijebiti funkciju "table()" kako bismo izradili tablicu koja prikazuje broj pojavnosti svake vrijednosti u jednom od varijabli. 
+Na primjer, ako želimo saznati koliko puta se pojavljuju "M" i "Ž" u varijabli "Spol":
+
+table(krgrupa$Spol)
+
+Isto tako, možemo koristiti funkciju "table()" kako bismo izradili tablicu koja prikazuje broj pojavnosti svake krvne grupe u varijabli "Krvna_grupa":
+
+table(krgrupa$Krvna_grupa)
+
+Rezultat će biti:
+ 0  A AB  B 
+ 4  4  1  1 
+
+# Python
+U Pythonu možemo koristiti Pandas
+
+import pandas as pd
+
+data = {
+    'Spol': ["Ž", "M", "M", "Ž", "Ž", "M", "M", "Ž", "M", "Ž"],
+    'Krvna_grupa': ["A", "0", "B", "0", "0", "A", "AB", "0", "A", "A"]
+}
+
+krgrupa = pd.DataFrame(data)
+print(krgrupa)
+
+# R
+Uočili smo da smo izostavili prvi stupac u gornjoj tablici. Koristit ćemo proširenu funkciju "table()" kako bismo dobili broj pojavljivanja svake vrijednosti u pojedinim varijablama.
+Također, koristit ćemo "table(krgrupa$Spol)" kako bismo dobili broj muškaraca i žena u našem uzorku te razmotrili odnos frekvencija pojavljivanja vrijednosti "M" i "Ž".
+
+ table(krgrupa$Spol)                                                                                                                                                         
+           M              Ž                                                                                                                                                                                   
+           5                5
+
+# Python
+U Pythonu možemo koristiti Pandas za ostvarivanje istih funkcionalnosti
+import pandas as pd
+
+data = {
+    'Spol': ["Ž", "M", "M", "Ž", "Ž", "M", "M", "Ž", "M", "Ž"],
+    'Krvna_grupa': ["A", "0", "B", "0", "0", "A", "AB", "0", "A", "A"]
+}
+
+krgrupa = pd.DataFrame(data)
+
+# Koristimo value_counts() za izračun frekvencije pojavljivanja svake vrijednosti u stupcu 'Spol'
+spol_counts = krgrupa['Spol'].value_counts()
+
+print(spol_counts)
+
+Ovaj Python kod koristi funkciju value_counts() za izračun frekvencije pojavljivanja svake vrijednosti u stupcu 'Spol' u DataFrame-u "krgrupa". Nakon izvođenja koda, dobit ćete rezultat koji prikazuje frekvenciju pojave "M" i "Ž".
