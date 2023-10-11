@@ -263,4 +263,77 @@ A              0.8
 AB             0.9
 B              1.0
 
-# FRMA SAN NA 2.1.3
+# R
+Pogledajmo podatke o visini, težini i indeksu tjelesne težine koje smo vidjeli na kraju prošlog poglavlja. Učitat ćemo ih korištenjem funkcije 
+read.xlsx i spremiti u varijablu kvant
+# Učitavanje potrebnih biblioteka
+library("rJava")
+library("xlsx")
+library("xlsxjars")
+
+# Učitavanje kvantitativnih podataka iz Excel datoteke
+kvant <- read.xlsx("BMI2.xlsx", sheetName = "Druga", header = TRUE, endRow = 13)
+
+# Uklanjanje prvog stupca (Ime) jer nije potreban
+kvant <- kvant[, c(2, 3, 4, 5)]
+
+# Provjera tipova preostalih podataka
+str(kvant)
+
+Podsjetimo se o kojim je podacima riječ
+> kvant
+Ovdje su primjeri podataka iz kvantitativnih podataka:
+
+NA|   Ime  |  Težina |  Visina |   BMI   |
+  |--------|---------|---------|----------|
+  |   A    |    60   |   165   | 22.038572|
+  |   B    |    80   |   180   | 24.69136 |
+  |   C    |    85   |   175   | 27.755104|
+  |   D    |    84   |   184   | 24.810965|
+  |   E    |    62   |   168   | 21.967126|
+  |   F    |    65   |   175   | 21.224497|
+  |   G    |    86   |   184   | 25.401708|
+  |   H    |    86   |   192   | 23.328999|
+  |   I    |    95   |   182   | 28.68011 |
+  |   J    |    78   |   178   | 24.61810 |
+  |   K    |    70   |   175   | 22.85714 |
+  |   L    |    68   |   170   | 23.52941 |
+Vidimo da je prva kolona zapravo višak, a pritom je i bez imena. Možemo je izbrisati tako da varijabli kvant pridružimo sve vrijednosti osim onih iz prve kolone:
+
+kvant<-kvant[,c(2,3,4,5)]
+Provjerimo kojeg su tipa preostali podaci: str(kvat)
+
+'data.frame': 12 obs. of 4 variables:
+ $ Ime  : chr  "A" "B" "C" "D" ...
+ $ Težina: num  60 80 85 84 62 65 86 86 95 78 ...
+ $ Visina: num  165 180 175 184 168 175 184 192 182 178 ...
+ $ BMI  : num  22 24.7 27.8 24.8 22 ...
+
+Kao i u slučaju kvalitativnih podataka, lako možemo napraviti tablice frekvencija za kvantitativne podatke, na primjer, pojavljivanje različitih visina među osobama čije smo podatke dobili:
+
+table(kvant$Visina)
+
+Rezultat će izgledati ovako:
+165 168 170 175 178 180 182 184 192 
+1   1   1     3   1   1   1   2   1 
+
+Naravno, jasno je da se visina 175 javlja najčešće, ali u ovom slučaju to nije toliko zanimljivo. Kada se radi s kvantitativnim podacima, imamo mnogo više informacija koje možemo koristiti prilikom analize podataka. Prije svega, to uključuje mjeru središnje tendencije i mjeru raspršenosti podataka.
+
+Vratit ćemo se BMI podacima kako bismo definirali navedene pojmove.
+
+# PYTHON
+U Pythonu se ekvivalentni kod može napraviti korsiteći Pandas:
+import pandas as pd
+
+# Učitavanje kvantitativnih podataka iz Excel datoteke
+kvant = pd.read_excel("BMI2.xlsx", sheet_name="Druga", header=0, nrows=13)
+
+# Izbacivanje prvog stupca (Ime) jer nije potreban
+kvant = kvant.iloc[:, 1:]
+
+# Ispis tipova preostalih podataka
+print(kvant.dtypes)
+
+# Prikaz tablice frekvencija visine
+visina_counts = kvant['Visina'].value_counts()
+print(visina_counts)
