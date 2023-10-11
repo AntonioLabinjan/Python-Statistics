@@ -339,3 +339,29 @@ visina_counts = kvant['Visina'].value_counts()
 print(visina_counts)
 
 # DIO 2.2 NE SADRŽI NIKAKVE PROGRAMSKE DJELOVE
+# 2.2.1
+# R
+Aritmetička sredina, mod i medijan
+# R
+U sljedećem primjeru imamo implementiranu R funkciju mean() koja računa aritmetičku sredinu:
+x <- c(24, 5, 9, 12, 22, 2, 89, 4, 13)
+mean(x)[1]  # 20
+
+Kao što je dobro poznato, aritmetička sredina računa srednju vrijednost dostupnih vrijednosti iz niza podataka, a ova mjera pomaže u eliminaciji izvanrednih i ekstremnih vrijednosti (outliers). 
+U ovom konkretnom primjeru, ukoliko uklonimo vrijednost 89 iz niza podataka, aritmetička sredina se smanjuje na 11.375, što se može postići sljedećim koracima:
+
+x <- x[!x == 89]
+mean(x)[1]  # 11.375
+
+# PYTHON
+U Pythonu koristimo ugrađenu funkciju mean iz NumPy-a
+import numpy as np
+
+x = np.array([24, 5, 9, 12, 22, 2, 89, 4, 13])
+result = np.mean(x)
+print(result)  # Output: 20.0
+
+# Uklanjanje vrijednosti 89 i ponovno računanje aritmetičke sredine
+x = x[x != 89]
+result = np.mean(x)
+print(result)  # Output: 11.375
