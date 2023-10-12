@@ -597,3 +597,198 @@ print(f"Standardna devijacija za uski niz: {sd_uski}")
 print(f"Standardna devijacija za siroki niz: {sd_siroki}")
 
 # NADALJE NEMA PROGRAMSKIH KODOVA SVE DO NASLOVA 2.5
+
+# R
+Vratimo se sada na primjer s indeksom tjelesne mase (BMI). Podaci su spremljeni u dataframe "kvant", a imena stupaca (vektora) u dataframe-u su Ime, Težina, Visina i BMI. Opremljeni novim znanjem, sada ćemo lako izračunati neke osnovne kvantitativne mjere tih podataka.
+
+- Srednja vrijednost težine: `mean(kvant$Tezina)` = 76.58333
+- Medijan težine: `median(kvant$Tezina)` = 79
+- Standardna devijacija težine: `sd(kvant$Tezina)` = 11.26102
+- Raspon težine: `range(kvant$Tezina)` = 60 do 95
+
+Primijetite da R-ova funkcija `range()` vraća minimalnu i maksimalnu vrijednost promatranih podataka. Naravno, raspon podataka, u prirodnom smislu, jednak je razlici između ta dva broja, odnosno 35.
+
+# Python
+import numpy as np
+import pandas as pd
+
+# Podaci
+data = {
+    'Ime': ['Osoba1', 'Osoba2', 'Osoba3', 'Osoba4', 'Osoba5'],
+    'Tezina': [70, 80, 75, 95, 60],
+    'Visina': [1.75, 1.80, 1.70, 1.90, 1.65],
+    'BMI': [22.86, 24.69, 25.95, 26.32, 22.04]
+}
+
+# Pretvaranje podataka u DataFrame
+df = pd.DataFrame(data)
+
+# Izračun kvantitativnih mjera
+srednja_vrijednost_tezine = np.mean(df['Tezina'])
+medijan_tezine = np.median(df['Tezina'])
+standardna_devijacija_tezine = np.std(df['Tezina'])
+raspon_tezine = np.ptp(df['Tezina'])
+
+# Ispis rezultata
+print(f"Srednja vrijednost težine: {srednja_vrijednost_tezine:.5f}")
+print(f"Medijan težine: {medijan_tezine:.5f}")
+print(f"Standardna devijacija težine: {standardna_devijacija_tezine:.5f}")
+print(f"Raspon težine: {raspon_tezine}")
+
+# R
+# Prikaz osnovnih statistika za stupac "Težina"
+summary(kvant$Tezina)
+# Rezultat:
+#     Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#    60.00    67.25    79.00    76.58    85.25    95.00
+
+# Prikaz osnovnih statistika za cijeli DataFrame "kvant"
+summary(kvant)
+# Rezultat:
+#      Ime                Tezina           Visina            BMI        
+#  Length:12          Min.   :60.00   Min.   :165.0   Min.   :21.22  
+#  Class :character   1st Qu.:67.25   1st Qu.:173.8   1st Qu.:22.65  
+#  Mode  :character   Median :79.00   Median :176.5   Median :24.07  
+#                     Mean   :76.58   Mean   :177.3   Mean   :24.24  
+#                     3rd Qu.:85.25   3rd Qu.:182.5   3rd Qu.:24.96  
+#                     Max.   :95.00   Max.   :192.0   Max.   :28.6
+
+# Python
+U Pythonu koristimo .describe()
+import pandas as pd
+
+# Podaci
+data = {
+    'Ime': ['Osoba1', 'Osoba2', 'Osoba3', 'Osoba4', 'Osoba5'],
+    'Tezina': [60.00, 67.25, 79.00, 76.58, 95.00],
+    'Visina': [165.0, 173.8, 176.5, 177.3, 192.0],
+    'BMI': [21.22, 22.65, 24.07, 24.24, 28.6]
+}
+
+# Pretvaranje podataka u DataFrame
+df = pd.DataFrame(data)
+
+# Prikaz osnovnih statistika za stupac "Tezina"
+print(df['Tezina'].describe())
+
+# Prikaz osnovnih statistika za cijeli DataFrame "kvant"
+print(df.describe())
+
+# R
+# Postavljanje margina za graf
+par(mar = c(4, 4, 2, 1))
+
+# Priprema za prikaz podataka o težini
+barplot(
+  kvant$Tezina,
+  names.arg = kvant$Ime,
+  ylim = c(0, 100),
+  main = "Podaci o težini",
+  xlab = "Osobe",
+  ylab = "Težina (kg)",
+  cex.axis = 0.6,
+  cex.names = 0.5,
+  cex.main = 0.9
+)
+
+Ovdje je prikazan bar grafikon koji prikazuje podatke o težini različitih osoba. Imena osoba su prikazana na x-osi, a težina (u kg) na y-osi. Grafikon prikazuje raspodjelu težina među osobama.
+
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci o težini i imenima osoba
+tezina = [60, 67.25, 79, 76.58, 85.25, 95]
+ime = ["Osoba1", "Osoba2", "Osoba3", "Osoba4", "Osoba5", "Osoba6"]
+
+# Postavljanje margina za graf
+plt.subplots_adjust(bottom=0.15, left=0.15)
+
+# Priprema za prikaz podataka o težini
+plt.bar(ime, tezina)
+plt.ylim(0, 100)
+plt.title("Podaci o težini")
+plt.xlabel("Osobe")
+plt.ylabel("Težina (kg)")
+plt.xticks(rotation=45, ha="right", fontsize=8)
+plt.yticks(fontsize=8)
+plt.title("Podaci o težini", fontsize=12)
+
+# Tekstualni opis
+plt.text(0.5, -0.25, "Ovdje je prikazan bar grafikon koji prikazuje podatke o težini različitih osoba.", transform=plt.gca().transAxes)
+plt.text(0.5, -0.3, "Imena osoba su prikazana na x-osi, a težina (u kg) na y-osi.", transform=plt.gca().transAxes)
+plt.text(0.5, -0.35, "Grafikon prikazuje raspodjelu težina među osobama.", transform=plt.gca().transAxes)
+
+# Prikaz grafa
+plt.show()
+
+# R
+
+par(mar = c(2, 2, 2, 1))
+
+# Priprema za prikaz podataka o težini
+barplot(
+  kvant$Tezina,
+  names.arg = kvant$Ime,
+  xlim = c(0, 100),
+  main = "Podaci o težini",
+  horiz = TRUE,
+  col = "darkred",
+  cex.axis = 0.7,
+  cex.names = 0.7,
+  cex.main = 0.9,
+  las = 1
+)
+
+Ovdje je prikazan horizontalni bar grafikon koji prikazuje podatke o težini različitih osoba.Imena osoba su prikazana na y-osi, a težina (u kg) na x-osi. Grafikon prikazuje raspodjelu težina među osobama.
+
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci
+ime = kvant['Ime']
+tezina = kvant['Tezina']
+
+# Postavljanje margina za graf
+plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.2)
+
+# Priprema za prikaz podataka o težini
+plt.barh(ime, tezina, color='darkred')
+
+# Postavljanje osi i naslova
+plt.xlim(0, 100)
+plt.xlabel('Težina (kg)')
+plt.title('Podaci o težini')
+
+# Prikaz grafikona
+plt.show()
+
+# Tekstualni opis
+print("Ovdje je prikazan horizontalni bar grafikon koji prikazuje podatke o težini različitih osoba.")
+print("Imena osoba su prikazana na y-osi, a težina (u kg) na x-osi.")
+print("Grafikon prikazuje raspodjelu težina među osobama.")
+
+# R
+U nastavku se koristi funkcija hist() za stvaranje histograma koji prikazuje raspodjelu visina iz podataka "kvant". U kodu je također postavljeno nekoliko parametara kako bi se pravilno formatirao graf. Margine grafa su prilagođene s par(mar = c(2, 2, 2, 1)) kako bi graf bio čitljiv.
+
+Histogram je grafički način prikazivanja distribucije podataka. Na x-osi se nalaze različite vrijednosti visine, dok je na y-osi prikazana frekvencija pojavljivanja svake visine. Histogram omogućava vizualno prepoznavanje učestalosti različitih visina u podacima, što je korisno za analizu distribucije podataka.
+# Postavljanje margina za graf
+par(mar = c(2, 2, 2, 1))
+
+# Prikaz histograma visine
+hist(kvant$Visina)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za graf
+plt.subplots_adjust(left=0.15)
+plt.figure(figsize=(6, 4))
+
+# Prikaz histograma visine
+plt.hist(kvant['Visina'], bins=10, edgecolor='k', color='blue')
+plt.title('Histogram visine')
+plt.xlabel('Visina')
+plt.ylabel('Broj pojavljivanja')
+
+plt.show()
+
