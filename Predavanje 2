@@ -575,4 +575,25 @@ variance_siroki = np.var(siroki, ddof=1)
 print("Za uski niz: Raspon =", range_uski, ", Varijanca =", variance_uski)
 print("Za siroki niz: Raspon =", range_siroki, ", Varijanca =", variance_siroki)
 
-## DOŠA SAN DO VARIJANCE NA 31. STRANICI
+# R varijanca
+Iako se standardna devijacija može izračunati i iz varijance (uzimanjem korijena), R ima svoju ugrađenu funkciju `sd()` koja izračunava standardnu devijaciju. Nizovi podataka o kojima je riječ u ovom odlomku imaju sljedeće standardne devijacije:
+
+- `sd(uski)[1]` = 1.154701
+- `sd(siroki)[1]` = 6.218253
+
+# Python varijanca
+import numpy as np
+
+# Nizovi podataka
+uski = [1, 2, 3, 4, 5]
+siroki = [10, 20, 30, 40, 50]
+
+# Izračun standardne devijacije
+sd_uski = np.std(uski)
+sd_siroki = np.std(siroki)
+
+# Ispis rezultata
+print(f"Standardna devijacija za uski niz: {sd_uski}")
+print(f"Standardna devijacija za siroki niz: {sd_siroki}")
+
+# NADALJE NEMA PROGRAMSKIH KODOVA SVE DO NASLOVA 2.5
