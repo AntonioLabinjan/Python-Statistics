@@ -1491,3 +1491,218 @@ dalj['rodjenje'] = pd.to_datetime(dalj['rodjenje'])
 
 # Dodajte novi stupac "godina" s godinama rođenja
 dalj['godina'] = dalj['rodjenje'].dt.year
+
+# R
+# Grupiranje duljine skoka po godinama rođenja i prikaz sažetka za svaku grupu
+by(dalj$daljina, dalj["godina"], summary)
+
+# Python
+import pandas as pd
+
+# Grupiranje duljine skoka po godinama rođenja i prikaz sažetka za svaku grupu
+grouped = dalj.groupby('godina')['daljina']
+summary = grouped.describe()
+
+print(summary)
+Python koristi Pandas za grupiranje stupca "daljina" prema stupcu "godina" i prikazivanje sažetka za svaku grupu
+
+# R
+par(mar = c(2, 2, 2, 1))
+par(mfrow = c(1, 2))
+
+dalj_2004 <- dalj[dalj[,"godina"] == 2004,]
+dalj_2005 <- dalj[dalj[,"godina"] == 2005,]
+
+hist(dalj_2004$daljina, main = "Godište 2004")
+hist(dalj_2005$daljina, main = "Godište 2005")
+
+# Python
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 4))
+
+dalj_2004 = dalj[dalj['godina'] == 2004]
+dalj_2005 = dalj[dalj['godina'] == 2005]
+
+plt.subplot(1, 2, 1)
+plt.hist(dalj_2004['daljina'], bins=10, color='skyblue')
+plt.title('Godište 2004')
+plt.xlabel('Daljina')
+plt.ylabel('Frekvencija')
+
+plt.subplot(1, 2, 2)
+plt.hist(dalj_2005['daljina'], bins=10, color='salmon')
+plt.title('Godište 2005')
+plt.xlabel('Daljina')
+plt.ylabel('Frekvencija')
+
+plt.tight_layout()
+plt.show()
+
+# R
+Tidyverse je skup paketa u R-u koji se koristi za modernu analizu i obradu podataka. Ovdje ćemo vam pružiti osnovne informacije o Tidyverse-u i demonstrirati kako se koristi uz upotrebu paketa magrittr za čitanje podataka iz data frame-a.
+
+Prvo, možete instalirati paket magrittr koristeći sljedeću naredbu:
+
+install.packages("magrittr")
+
+Nakon instalacije, možete ga učitati u svoje okruženje R-a koristeći naredbu library:
+
+library(magrittr)
+
+Nakon što ste učitali paket magrittr, možete koristiti operator %>% za proslijeđivanje rezultata iz jednog izraza funkciji ili operaciji. Na primjer, ako želite izračunati sažetak za stupac "daljina" iz data frame-a dalj, možete to učiniti ovako:
+
+library(magrittr)
+
+dalj$daljina %>%
+  summary
+
+Ovaj kôd koristi operator %>% kako bi se proslijedila vrijednost izraza dalj$daljina funkciji summary. Rezultat je isti kao korištenje funkcije summary(dalj$daljina)
+
+# Python
+U Pythonu, umjesto Tidyverse-a, možemo koristiti Pandas, popularnu biblioteku za analizu i obradu podataka. Za čitanje podataka i izračunavanje sažetka za stupac "daljina" iz data frame-a možete koristiti sljedeći ekvivalentni Python kôd:
+import pandas as pd (ukoliko nije instaliran, instaliramo ga u našem terminalu pomoću pip install Pandas)
+
+# Pretpostavljamo da imate DataFrame "dalj" s odgovarajućim podacima
+
+# Izračunajte sažetak za stupac "daljina"
+summary = dalj["daljina"].describe()
+
+# Ispis rezultata
+print(summary)
+
+Pandas nudi describe() funkciju koja daje sažetak za numeričke stupce u DataFrame-u, uključujući minimum, maksimum, srednju vrijednost, kvartile itd. Ovaj kôd će vam dati ekvivalentne rezultate kao i R kôd s Tidyverse-om
+
+# R
+rvest paket služi za čitanje i parsiranje HTML sa web stranice te dohvaćanje tablica koje sadrži. Tablice se spremaju u listu eu. Važno je napomenuti da je adresa web stranice sastavljena korištenjem paste0() funkcije i operatora %>% se koristi za slijedno izvođenje operacija.
+# Učitavanje paketa rvest
+library(rvest)
+
+# Adresa web stranice
+wikistr <- "https://en.wikipedia.org/wiki/"
+listurban <- "List_of_urban_areas_in_the_European_Union"
+
+# Učitavanje HTML sa stranice i dohvaćanje tablica
+eu <- read_html(paste0(wikistr, listurban)) %>%
+  html_nodes(css = "table") %>%
+  html_table(fill = TRUE)
+
+# Python
+Kod Pythona čitanje i parsiranje HTML web stranica te dohvaćanje tablica može se postići korištenjem biblioteke BeautifulSoup i requests za dohvaćanje HTML sadržaja sa web stranice. 
+import requests
+from bs4 import BeautifulSoup
+
+# Adresa web stranice
+wikistr = "https://en.wikipedia.org/wiki/"
+listurban = "List_of_urban_areas_in_the_European_Union"
+url = wikistr + listurban
+
+# Dohvaćanje HTML sa web stranice
+response = requests.get(url)
+html_content = response.text
+
+# Parsiranje HTML-a koristeći BeautifulSoup
+soup = BeautifulSoup(html_content, 'html.parser')
+
+# Dohvaćanje tablica
+tables = soup.find_all('table', {'class': 'wikitable'}) 
+
+# Pretvaranje tablica u DataFrame (ovdje pretpostavljamo da koristimo pandas)
+import pandas as pd
+dfs = [pd.read_html(str(table)) for table in tables]
+
+# R
+# Odabir određenih stupaca iz liste 'eu' i pretvaranje u DataFrame
+eu_cities <- as.data.frame(eu[, c(2, 4, 5, 9)])
+
+# Ispis strukture novog DataFrame-a
+str(eu_cities, width = 73, strict.width = "cut")
+
+# Python
+import pandas as pd
+
+# Odabir određenih stupaca iz DataFrame-a 'eu' i pretvaranje u novi DataFrame
+eu_cities = eu.iloc[:, [1, 3, 4, 8]]
+
+# Ispis strukture novog DataFrame-a
+print(eu_cities.info())
+
+# R
+# Zamjena imena stupaca u eu_cities DataFrame-u
+names(eu_cities) <- c("Grad", "Drzava", "BrojSt", "Gustoca")
+
+# Konvertiranje BrojSt i Gustoca u numeričke vektore
+eu_cities$BrojSt <- as.numeric(gsub(",", "", eu_cities$BrojSt))
+eu_cities$Gustoca <- as.numeric(gsub(",", "", eu_cities$Gustoca))
+
+# Ispis strukture DataFrame-a s ograničenim brojem redova za prikaz
+str(eu_cities, vec.len = 3)
+
+# Ispis strukture eu_cities DataFrame-a
+'data.frame': 70 obs. of 4 variables:
+ $ Grad   : chr "Paris" "Ruhr(multiple anchor cities)" "Madrid" ...
+ $ Drzava : chr "France" "Germany" "Spain" ...
+ $ BrojSt : num 11060000 6237000 6211000 5488000 ...
+ $ Gustoca: num 3877 2325 4551 2467 ...
+
+# Možemo vidjeti gdje se Zagreb nalazi u listi gradova
+eu_cities[58,]
+ Grad       Drzava    BrojSt   Gustoca
+58 Zagreb Croatia 630000 337
+
+# Python
+# Zamjena imena stupaca u eu_cities DataFrame-u
+eu_cities.columns = ["Grad", "Drzava", "BrojSt", "Gustoca"]
+
+# Konvertiranje BrojSt i Gustoca u numeričke vektore
+eu_cities["BrojSt"] = eu_cities["BrojSt"].str.replace(",", "").astype(float)
+eu_cities["Gustoca"] = eu_cities["Gustoca"].str.replace(",", "").astype(float)
+
+# Ispis strukture DataFrame-a s ograničenim brojem redova za prikaz
+print(eu_cities.head(3))
+
+# Ispis strukture eu_cities DataFrame-a
+eu_cities.info()
+
+# Možemo vidjeti gdje se Zagreb nalazi u listi gradova
+zagreb_info = eu_cities[eu_cities["Grad"] == "Zagreb"]
+print(zagreb_info)
+
+# R
+# Sortiranje eu_cities po Gustoci naseljenosti u opadajućem redoslijedu
+eu_sorted_gust <- eu_cities[order(eu_cities$Gustoca, decreasing = TRUE),]
+
+# Ispis prvih 10 gradova s najvećom gustoćom naseljenosti
+head(eu_sorted_gust, 10)
+R kod sortira DataFrame eu_cities po stupcu Gustoca u opadajućem redoslijedu, a zatim ispisuje prvih 10 gradova s najvećom gustoćom naseljenosti. Gradovi su rangirani prema gustoći naseljenosti od najveće prema najmanjoj.
+
+        Grad    Drzava   BrojSt Gustoca
+67      Genoa     Italy   540000  695021
+63     Vienna   Austria  1890000   56148
+6     Athens    Greece  3450000  529046
+57     Bilbao     Spain   775000  525051
+62    Málaga     Spain   686000  509469
+61 Santa Cruz     Spain   506000  465238
+45 SofiaPernik Bulgaria  947000  45713
+48    Madrid     Spain  6211000  455122
+22  Bucharest   Romania 1862000  45225
+44 Barcelona     Spain 4800000  4477
+
+# Python
+# Sortiranje eu_cities po Gustoca u opadajućem redoslijedu
+eu_sorted_gust = eu_cities.sort_values(by='Gustoca', ascending=False)
+
+# Ispis prvih 10 gradova s najvećom gustoćom naseljenosti
+print(eu_sorted_gust.head(10))
+
+        Grad    Drzava   BrojSt Gustoca
+67      Genoa     Italy   540000  695021
+63     Vienna   Austria  1890000   56148
+6     Athens    Greece  3450000  529046
+57     Bilbao     Spain   775000  525051
+62    Málaga     Spain   686000  509469
+61 Santa Cruz     Spain   506000  465238
+45 SofiaPernik Bulgaria  947000  45713
+48    Madrid     Spain  6211000  455122
+22  Bucharest   Romania 1862000  45225
+44 Barcelona     Spain 4800000  4477
