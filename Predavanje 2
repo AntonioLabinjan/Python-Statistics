@@ -1706,3 +1706,273 @@ print(eu_sorted_gust.head(10))
 48    Madrid     Spain  6211000  455122
 22  Bucharest   Romania 1862000  45225
 44 Barcelona     Spain 4800000  4477
+
+# R
+# Sortiranje eu_cities prema gustoći naseljenosti u opadajućem redoslijedu
+eu_sort_gust <- eu_cities[order(eu_cities$Gustoca, decreasing = TRUE),]
+
+# Ispis prvih 10 gradova s najvećom gustoćom naseljenosti
+head(eu_sort_gust, 10)
+
+# Python
+import pandas as pd
+
+# Sortiranje eu_cities prema gustoći naseljenosti u opadajućem redoslijedu
+eu_sort_gust = eu_cities.sort_values(by='Gustoca', ascending=False)
+
+# Ispis prvih 10 gradova s najvećom gustoćom naseljenosti
+print(eu_sort_gust.head(10))
+
+# R
+Možemo pregledati histogram frekvencija veličine gradova
+# Postavljanje margina za grafikon
+par(mar = c(4, 4, 2, 2))
+
+# Nacrtaj histogram za veličinu EU gradova
+hist(
+  eu_cities$BrojSt / 1000000,
+  main = "Veličina EU gradova",
+  xlab = "Veličina urbanog područja (mil.)",
+  breaks = 11,
+  xlim = c(0.5, 11.5),
+  xaxt = "n",
+  ylab = "Broj gradova",
+  cex.main = 0.8,
+  cex.lab = 0.8,
+  cex.axis = 0.8,
+  col = "aquamarine4"
+)
+
+# Postavljanje oznaka na x-osi
+axis(1, at = seq(0.5, 11.5, by = 1), labels = seq(0.5, 11.5, by = 1), cex.axis = 0.8)
+
+# Python
+# Koristit ćemo matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Podaci za histogram (proučavanje BrojSt, podijeljeno s 1.000.000)
+data = eu_cities['BrojSt'] / 1000000
+
+# Postavljanje margina za grafikon
+plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+
+# Nacrtaj histogram
+plt.hist(data, bins=11, range=(0.5, 11.5), color='aquamarine4')
+
+# Postavke osi i naslova
+plt.xlabel("Veličina urbanog područja (mil.)")
+plt.ylabel("Broj gradova")
+plt.title("Veličina EU gradova")
+
+# Postavljanje oznaka na x-osi
+plt.xticks(np.arange(0.5, 12, 1))
+
+# Prikaži grafikon
+plt.show()
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(2, 4, 2, 2))
+
+# Nacrtaj histogram relativnih frekvencija
+hist(
+  eu_cities$BrojSt / 1000000,
+  main = "Veličina EU gradova",
+  probability = TRUE,
+  xlab = "Veličina urbanog područja (mil.)",
+  breaks = 11,
+  xlim = c(0.5, 11.5),
+  xaxt = "n",
+  ylab = "Relativna frekvencija",
+  cex.main = 0.8,
+  cex.lab = 0.8,
+  col = "darkmagenta"
+)
+
+# Postavljanje oznaka na x-osi
+axis(1, at = seq(0.5, 11.5, by = 1), labels = seq(0.5, 11.5, by = 1), cex.axis = 0.8)
+
+# Dodavanje "rug" (ticks) na x-osi
+rug(eu_cities$BrojSt / 1000000, ticksize = 0.03)
+
+Ovaj kôd koristi funkciju hist za nacrtavanje histograma relativnih frekvencija na temelju podataka iz stupca eu_cities$BrojSt, pri čemu se koristi probability = TRUE. Oznake i stilovi grafikona također su postavljeni, a na x-osi se dodaju oznake s funkcijom axis. Također je dodan "rug" na x-osi pomoću funkcije rug.
+
+# Python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Postavljanje margina za grafikon
+plt.subplots_adjust(left=0.15, right=0.95, top=0.9, bottom=0.2)
+
+# Niz podataka (prilagođeni brojevi)
+data = np.array(eu_cities['BrojSt']) / 1000000
+
+# Nacrtaj histogram relativnih frekvencija
+plt.hist(data, bins=11, density=True, color='darkmagenta')
+
+# Postavljanje naslova i oznaka osi
+plt.title("Veličina EU gradova")
+plt.xlabel("Veličina urbanog područja (mil.)")
+plt.ylabel("Relativna frekvencija")
+
+# Postavljanje granica x-osi
+plt.xlim(0.5, 11.5)
+
+# Dodavanje oznaka na x-osi
+plt.xticks(np.arange(0.5, 12, 1), rotation=0)
+
+# Dodavanje "rug" (ticks) na x-osi
+plt.scatter(data, np.zeros_like(data), marker='|', color='black', s=30)
+
+# Prikaz grafa
+plt.show()
+
+# R
+R-boxplot je koristan za prikazivanje raspodjele podataka i identificiranje potencijalnih outlier-a. U ovom slučaju, prikazat ćemo boxplot za veličinu EU gradova. Evo R koda koji to radi:
+# Postavljanje margina za grafikon
+par(mar = c(2, 2, 1, 2))
+
+# Nacrtaj horizontalni boxplot za veličinu EU gradova
+boxplot(eu_cities$BrojSt/1000000, horizontal = TRUE)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za grafikon
+plt.subplots_adjust(left=0.2)
+
+# Crtanje horizontalnog boxplot-a za veličinu EU gradova
+plt.boxplot(eu_cities["BrojSt"] / 1000000, vert=False)
+
+# Postavljanje oznaka
+plt.title("Veličina EU gradova")
+plt.xlabel("Veličina urbanog područja (mil.)")
+plt.ylabel("Broj gradova")
+
+# Prikaz grafikona
+plt.show()
+
+# R
+U primjeru 2.7.1 možemo koristiti funkciju by kako bismo selektirali podatke iz nekog data frame-a. Slično, možemo postići isti rezultat koristeći funkciju aggregate(), kao što je prikazano u donjem primjeru:
+aggregate(eu_cities$BrojSt, by = list(eu_cities$Drzava), FUN = sum)
+Ova naredba agregira podatke iz stupca eu_cities$BrojSt grupirane prema vrijednostima u stupcu eu_cities$Drzava i primjenjuje funkciju sum kako bi izračunala ukupnu sumu za svaku grupu (državu).
+
+# Python
+Python korsiti pandas za ostvarivanje istih funkcionalnosti. Python kod će grupirati podatke prema stupcu 'Drzava' i primijeniti funkciju sum na stupcu 'BrojSt' kako bi izračunao ukupnu sumu za svaku državu. Rezultat će biti DataFrame s dvjema kolonama, 'Drzava' i 'BrojSt', koji sadrži agregirane vrijednosti za svaku državu.
+import pandas as pd
+
+# Pretvaranje DataFrame-a eu_cities u Pandas DataFrame
+eu_cities_df = pd.DataFrame(eu_cities)
+
+# Agregacija podataka prema stupcu 'BrojSt' grupiranom po stupcu 'Drzava' i primjenjujući funkciju sum
+result = eu_cities_df.groupby('Drzava')['BrojSt'].sum().reset_index()
+
+# Ispis rezultata
+print(result)
+
+# R
+Argument funkcije aggregate() by određuje po kojim vrijednostima ćemo grupirati podatke, dok argument FUN određuje koju funkciju ćemo primijeniti na takve grupirane (agregirane) podatke. Donji kod ilustrira upotrebu funkcije aggregate() u potpunosti:
+aggregate(BrojSt ~ Drzava, data = eu_cities, FUN = sum)
+
+Prednost korištenja funkcije aggregate je da nam omogućuje grupiranje podataka prema prvobitnim nazivima stupaca u data frame-u eu_cities, što čini pristup podacima preglednijim. Rezultat ove funkcije je novi data frame koji nam omogućava primjenu različitih funkcija na podacima i dobivanje rezultata kao novog data frame-a. Ova fleksibilnost nam omogućava sortiranje podataka na različite načine, kao što je prikazano u donjem primjeru:
+
+df1 <- aggregate(BrojSt ~ Drzava, data = eu_cities, FUN = sum, subset = c(1:20))
+df2 <- aggregate(BrojSt ~ Drzava, data = eu_cities, FUN = length, subset = c(1:20))
+df <- cbind.data.frame(df1, df2[, 2])
+names(df) <- c("Drzava", "Stanovnici", "Broj_gradova")
+df[order(df$Broj_gradova, decreasing = TRUE),]
+
+U ovom primjeru, koristimo funkciju aggregate kako bismo grupirali podatke iz stupca 'BrojSt' prema vrijednostima iz stupca 'Drzava' za prvih 20 redaka. Zatim koristimo funkciju cbind.data.frame() za spajanje dvaju rezultirajućih data frame-ova (df1 i df2) te mijenjamo nazive stupaca pomoću funkcije names(). Na kraju, koristimo funkciju order() kako bismo sortirali rezultirajući data frame df prema stupcu 'Broj_gradova' u opadajućem redoslijedu.
+
+# Python
+import pandas as pd
+
+# Grupiranje i agregacija
+df1 = eu_cities.loc[1:20].groupby('Drzava')['BrojSt'].sum().reset_index()
+df2 = eu_cities.loc[1:20].groupby('Drzava')['BrojSt'].count().reset_index()
+
+# Spajanje data frame-ova
+result_df = pd.merge(df1, df2, on='Drzava')
+
+# Preimenovanje stupaca
+result_df.columns = ['Drzava', 'Stanovnici', 'Broj_gradova']
+
+# Sortiranje prema Broj_gradova u opadajućem redoslijedu
+result_df = result_df.sort_values(by='Broj_gradova', ascending=False)
+
+print(result_df)
+
+# R
+U R-u se isti rezultat može postići na nekoliko načina
+
+Primjer 1: Korištenje operatera %>% iz paketa dplyr
+library(dplyr)
+
+result <- eu_cities[1:20,] %>%
+  group_by(Drzava) %>%
+  mutate(Stanovnici = sum(BrojSt), Broj_gradova = n()) %>%
+  summarise(across(c(Broj_gradova, Stanovnici), unique)) %>%
+  arrange(desc(Broj_gradova))
+
+# Ispis rezultata
+print(result)
+
+Primjer 2: Korištenje data.table
+
+library(data.table)
+
+dtdf <- setDT(eu_cities[1:20,])[, .(Broj_gradova = .N, Stanovnici = sum(BrojSt)), by = Drzava]
+
+# Sortiranje rezultata
+dtdf <- dtdf[order(dtdf$Broj_gradova, decreasing = TRUE)]
+
+# Ispis rezultata
+print(dtdf)
+
+# Python
+Isto je moguće i u Pythonu, pa postoje 2 načina za isti rezultat
+import pandas as pd
+
+# Učitavanje podataka iz DataFrame-a eu_cities
+# Zamislite da je eu_cities pandas DataFrame sa odgovarajućim podacima
+eu_cities = pd.DataFrame(...)  # Ovdje dodamo prave podatke
+
+# Filtriranje prvih 20 redova
+eu_cities = eu_cities.iloc[:20]
+
+# Korištenje operatera za obradu podataka
+result = (
+    eu_cities
+    .groupby('Drzava')
+    .agg(Broj_gradova=pd.NamedAgg(column='BrojSt', aggfunc='count'), 
+         Stanovnici=pd.NamedAgg(column='BrojSt', aggfunc='sum'))
+    .reset_index()
+    .sort_values(by='Broj_gradova', ascending=False)
+)
+
+# Ispis rezultata
+print(result)
+
+import pandas as pd
+
+# Učitavanje podataka iz DataFrame-a eu_cities
+# Zamislite da je eu_cities pandas DataFrame sa odgovarajućim podacima
+eu_cities = pd.DataFrame(...)  # Zamijenite ... sa stvarnim podacima
+
+# Filtriranje prvih 20 redova
+eu_cities = eu_cities.iloc[:20]
+
+# Korištenje data.table za obradu podataka
+import data_table as dt
+dtdf = dt.Frame(eu_cities)
+result = (
+    dtdf[:, dt.sum(dt.f.BrojSt), dt.count(), dt.by(dt.f.Drzava)]
+    .sort(-dt.f.Broj_gradova)
+)
+
+# Ispis rezultata
+print(result)
+
+# R
+Paket "R" dolazi s raznovrsnim paketima koji su vrlo korisni za različite potrebe u analizi podataka. Popis dostupnih paketa može se pronaći korištenjem funkcije data(package = "ime_paketa"), koja prikazuje informacije o paketima i omogućuje pristup dokumentaciji i funkcionalnostima svakog od njih.
