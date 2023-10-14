@@ -1457,3 +1457,37 @@ plt.title("Varaždin")
 plt.xlabel("Daljina")
 
 plt.show()
+
+# R
+# Broj natjecatelja iz Zagreba, Rijeke i Varaždina
+broj_natjecatelja_zg <- nrow(dalj.zg)
+broj_natjecatelja_ri <- nrow(dalj.ri)
+broj_natjecatelja_vz <- nrow(dalj.vz)
+
+broj_natjecatelja_zg
+broj_natjecatelja_ri
+broj_natjecatelja_vz
+
+# Python
+import Numpy
+# Broj natjecatelja iz Zagreba, Rijeke i Varaždina
+broj_natjecatelja_zg = dalj_zg.shape[0]
+broj_natjecatelja_ri = dalj_ri.shape[0]
+broj_natjecatelja_vz = dalj_vz.shape[0]
+
+print(broj_natjecatelja_zg)
+print(broj_natjecatelja_ri)
+print(broj_natjecatelja_vz)
+
+# R
+Zbog lakše manipulacije datumima, dodat ćemo u naš dataframe još 1 stupac u kojem će biti navedena samo numerička godina rođenja
+dalj$godina <- as.numeric(format(dalj$rodjenje, "%Y"))
+
+# Python
+import pandas as pd
+
+# Pretvorite stupac "rodjenje" u tip datuma (date)
+dalj['rodjenje'] = pd.to_datetime(dalj['rodjenje'])
+
+# Dodajte novi stupac "godina" s godinama rođenja
+dalj['godina'] = dalj['rodjenje'].dt.year
