@@ -1230,4 +1230,230 @@ plt.suptitle("Zavisnost između visine, težine i BMI", y=1.02)
 
 plt.show()
 
-# FRMA SAN NA NASLOVU 2.7
+# R
+# Učitavanje podataka iz Excel datoteke "Skok-u-dalj.xlsx" u varijablu "dalj"
+dalj <- read.xlsx("Skok-u-dalj.xlsx", sheetName = "Skok-u-dalj", header = FALSE)
+
+# Python
+Da bismo u Pythonu učitali Excel datoteku, koristimo Pandas paket
+import pandas as pd
+
+# Učitavanje podataka iz Excel datoteke "Skok-u-dalj.xlsx" u DataFrame "dalj"
+dalj = pd.read_excel("Skok-u-dalj.xlsx", sheet_name="Skok-u-dalj", header=None)
+
+# R
+U R-u možemo i pridružiti imena stupcima
+# Pridruživanje imena stupcima DataFrame-a "dalj"
+names(dalj) <- c("daljina", "ime", "prezime", "rodjenje", "klub", "dat_skok")
+
+# Python
+# Pridruživanje imena stupcima DataFrame-a "dalj"
+dalj.columns = ["daljina", "ime", "prezime", "rodjenje", "klub", "dat_skok"]
+
+# R
+U ovom kontekstu, imamo jedan numerički vektor koji sadrži ukupno 30 podataka. Stupci "rodjenje" i "dat_skok" predstavljaju datume, što znači da se mogu urediti i sortirati. Na primjer, možemo sortirati stupac "rodjenje" kako bismo dobili podatke u određenom redoslijedu, kao što je prikazano u sljedećem R kodu:
+# Sortiranje stupca "rodjenje" u DataFrame-u "dalj"
+sorted_dalj <- dalj[order(dalj$rodjenje), ]
+Sortirati će se datumi rođenja uzlazno i dati nam uredan pregled nad podacima
+
+# Python
+U ovom kontekstu, imamo jedan numerički vektor koji sadrži ukupno 30 podataka. Stupci "rodjenje" i "dat_skok" predstavljaju datume, što znači da se mogu urediti i sortirati. Na primjer, možemo sortirati stupac "rodjenje" kako bismo dobili podatke u određenom redoslijedu, kao što je prikazano u sljedećem Python kodu:
+# Sortiranje stupca "rodjenje" u DataFrame-u "dalj"
+sorted_dalj = dalj.sort_values(by="rodjenje")
+
+# R
+# Ispis sažetka podataka za DataFrame "dalj"
+summary(dalj)
+
+# Dobivena tablica sa sređenim formatiranjem
+# ------------------------------------------------------------------------------------------------------------------------------
+#       daljina              ime                   prezime                 rodjenje        klub              dat_skok   
+# Length:30          Length:30          Length:30          Length:30          Length:30          Length:30         
+# Class :character   Class :character   Class :character   Class :character   Class :character   Class :character  
+# Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+# ------------------------------------------------------------------------------------------------------------------------------
+#       Min.             :5.420   Min.   :5.518   Min.   :5.850   Min.   :2003-03-31   Min.   :2022-04-30  
+# 1st Qu.:5.518   1st Qu.:5.518   1st Qu.:5.850   1st Qu.:2004-07-22   1st Qu.:2022-05-22  
+# Median :5.850   Median :5.518   Median :5.850   Median :2006-09-06   Median :2022-06-19  
+# Mean   :5.969   Mean   :5.518   Mean   :5.850   Mean   :2006-01-27   Mean   :2022-07-10  
+# 3rd Qu.:6.050   3rd Qu.:5.518   3rd Qu.:5.850   3rd Qu.:2007-05-04   3rd Qu.:2022-09-11  
+# Max.   :7.510   Max.   :5.518   Max.   :5.850   Max.   :2009-03-10   Max.   :2022-09-20  
+# ------------------------------------------------------------------------------------------------------------------------------
+
+# Python
+import pandas as pd
+
+# Prikaz sažetka podataka za DataFrame "dalj"
+summary_dalj = dalj.describe(include="all")
+
+# Ispis tablice srednjim formatiranjem
+print(summary_dalj.to_markdown())
+
+Ovaj Python kod koristi funkciju describe() za prikaz sažetka podataka u DataFrame dalj, a zatim koristi to_markdown() metodu kako bi ispisao tablicu sa srednjim formatiranjem.
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(2, 2, 2, 1))
+
+# Nacrtajte boxplot za stupac "daljina" u DataFrame-u "dalj"
+boxplot(
+  dalj$daljina,
+  cex.axis = 0.8,
+  main = "Boxplot preskočene daljine"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za grafikon
+plt.figure(figsize=(5, 5))
+plt.margins(0.2)
+
+# Nacrtajte boxplot za stupac "daljina" u DataFrame "dalj"
+plt.boxplot(dalj["daljina"], vert=False)
+plt.title("Boxplot preskočene daljine")
+
+plt.show()
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(4, 4, 2, 1))
+
+# Nacrtajte histogram za stupac "daljina" u DataFrame-u "dalj"
+hist(
+  dalj$daljina,
+  main = "Histogram duljine skoka",
+  xlab = "Daljina",
+  ylab = "Frekvencija",
+  las = 1,
+  cex.axis = 0.8,
+  col = "darkmagenta"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za grafikon
+plt.figure(figsize=(4, 4))
+plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.2)
+
+# Nacrtajte histogram za stupac "daljina" u DataFrame "dalj"
+plt.hist(dalj["daljina"], bins=10, color="darkmagenta")
+plt.title("Histogram duljine skoka")
+plt.xlabel("Daljina")
+plt.ylabel("Frekvencija")
+
+plt.show()
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(4, 4, 2, 1))
+
+# Nacrtajte histogram za stupac "daljina" u DataFrame-u "dalj"
+hist(
+  dalj$daljina,
+  main = "Histogram duljine skoka",
+  xlab = "Daljina",
+  ylab = "Frekvencija",
+  breaks = 15,
+  las = 1,
+  cex.axis = 0.8,
+  cex.main = 0.8,
+  col = "darkmagenta"
+)
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za grafikon
+plt.figure(figsize=(4, 4))
+plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.2)
+
+# Nacrtajte histogram za stupac "daljina" u DataFrame "dalj"
+plt.hist(dalj["daljina"], bins=15, color="darkmagenta")
+plt.title("Histogram duljine skoka")
+plt.xlabel("Daljina")
+plt.ylabel("Frekvencija")
+
+plt.show()
+
+# R
+# Grupiranje duljine skoka prema klubovima i prikaz sažetka za svaku grupu
+by(dalj$daljina, dalj["klub"], summary)
+
+# Python
+import pandas as pd
+
+# Grupiranje duljine skoka prema klubovima i prikaz sažetka za svaku grupu
+grouped = dalj.groupby("klub")
+summary = grouped["daljina"].describe()
+print(summary)
+
+# R
+# Izdvajamo natjecatelje iz Zagreba
+dalj.zg <- dalj[dalj$klub == "Zagreb", ]
+
+# Izdvajamo natjecatelje iz Rijeke
+dalj.ri <- dalj[dalj$klub == "Rijeka", ]
+
+# Izdvajamo natjecatelje iz Varaždina
+dalj.vz <- dalj[dalj$klub == "Varaždin", ]
+
+# Postavljamo margine za grafikone
+par(mar = c(2, 2, 2, 1))
+
+# Postavljamo raspored za prikaz boxplotova
+par(mfrow = c(1, 3))
+
+# Crtamo boxplot za natjecatelje iz Zagreba
+boxplot(
+  dalj.zg$daljina,
+  main = "Zagreb"
+)
+
+# Crtamo boxplot za natjecatelje iz Rijeke
+boxplot(
+  dalj.ri$daljina,
+  main = "Rijeka"
+)
+
+# Crtamo boxplot za natjecatelje iz Varaždina
+boxplot(
+  dalj.vz$daljina,
+  main = "Varaždin"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Izdvajamo natjecatelje iz Zagreba
+dalj_zg = dalj[dalj["klub"] == "Zagreb"]
+
+# Izdvajamo natjecatelje iz Rijeke
+dalj_ri = dalj[dalj["klub"] == "Rijeka"]
+
+# Izdvajamo natjecatelje iz Varaždina
+dalj_vz = dalj[dalj["klub"] == "Varaždin"]
+
+# Postavljanje margina za grafikone
+plt.subplots(figsize=(12, 4))
+plt.subplots_adjust(wspace=0.4)
+
+# Crtamo boxplot za natjecatelje iz Zagreba
+plt.subplot(131)
+plt.boxplot(dalj_zg["daljina"], vert=False)
+plt.title("Zagreb")
+plt.xlabel("Daljina")
+
+# Crtamo boxplot za natjecatelje iz Rijeke
+plt.subplot(132)
+plt.boxplot(dalj_ri["daljina"], vert=False)
+plt.title("Rijeka")
+plt.xlabel("Daljina")
+
+# Crtamo boxplot za natjecatelje iz Varaždina
+plt.subplot(133)
+plt.boxplot(dalj_vz["daljina"], vert=False)
+plt.title("Varaždin")
+plt.xlabel("Daljina")
+
+plt.show()
