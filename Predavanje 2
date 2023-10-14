@@ -1975,4 +1975,269 @@ result = (
 print(result)
 
 # R
-Paket "R" dolazi s raznovrsnim paketima koji su vrlo korisni za različite potrebe u analizi podataka. Popis dostupnih paketa može se pronaći korištenjem funkcije data(package = "ime_paketa"), koja prikazuje informacije o paketima i omogućuje pristup dokumentaciji i funkcionalnostima svakog od njih.
+Program "R" dolazi s raznovrsnim paketima koji su vrlo korisni za različite potrebe u analizi podataka. Popis dostupnih paketa može se pronaći korištenjem funkcije data(package = "ime_paketa"), koja prikazuje informacije o paketima i omogućuje pristup dokumentaciji i funkcionalnostima svakog od njih.
+Tako se, na primjer, u R-ovom paketu "datasets" nalazi skup podataka "faithful", koji sadrži podatke o erupcijama gejzira "Old Faithful" koji se nalazi u američkom Nacionalnom parku Yellowstone. Taj gejzir je poznat po relativno pravilnim erupcijama, gdje se događaju svakih 40 minuta do dva sata. U skupu podataka "faithful" nalaze se dvije kolone s 272 redaka. U prvoj koloni su navedeni vremena trajanja erupcija, a u drugoj koloni vremena čekanja između erupcija (u minutama). S obzirom na broj redaka, nećemo ispisati sve elemente tog skupa podataka, već ćemo odmah pogledati njihovu strukturu, sažetak podataka i boxplotove.
+library("datasets")
+
+# Ispis strukture podataka 'faithful'
+str(faithful)
+# 'data.frame': 272 obs. of 2 variables:
+#  $ eruptions: num 3.6 1.8 3.33 2.28 4.53 ...
+#  $ waiting  : num 79 54 74 62 85 55 88 85 51 85 ...
+
+# Sažetak podataka
+summary(faithful)
+#   eruptions        waiting     
+# Min.   :1.600   Min.   :43.0  
+# 1st Qu.:2.163   1st Qu.:58.0  
+# Median :4.000   Median :76.0  
+# Mean   :3.488   Mean   :70.9  
+# 3rd Qu.:4.454   3rd Qu.:82.0  
+# Max.   :5.100   Max.   :96.0  
+
+# Grafovi boxplot
+par(mfrow = c(1, 2), mar = c(2, 2, 2, 2))
+boxplot(faithful$eruptions, main = "Trajanje erupcije")
+boxplot(faithful$waiting, main = "Vrijeme između")
+
+# Python
+U Pythonu ne postoji ekvivalentna funkcija koja prikazuje popis dostupnih paketa zajedno s informacijama o njima na način sličan funkciji data(package = "ime_paketa") u R-u.
+
+U Pythonu, možete dobiti popis instaliranih paketa koristeći naredbu pip list ili pip freeze u naredbenom retku, ovisno o verziji Pythona koju koristite. Međutim, to će samo izlistati nazive paketa bez dodatnih informacija.
+
+Da biste dobili više informacija o određenom paketu, možete koristiti pip show ime_paketa, gdje zamjenjujete "ime_paketa" stvarnim nazivom paketa. Ova naredba će prikazati informacije o verziji, autorima, opisu i drugim metapodacima za taj paket.
+
+U Pythonu također postoji funkcija help(), koja vam omogućuje da dobijete dokumentaciju i informacije o modulima i funkcijama. Na primjer, ako želite dobiti informacije o paketu numpy, možete koristiti help(numpy). Ova funkcija će prikazati dokumentaciju za paket, modul ili funkciju koje specificirate kao argument.
+
+# R
+Ovaj kod stvara dva jednodimenzionalna grafa (stripchart) za prikazivanje podataka iz skupa podataka "faithful". Prvi graf prikazuje trajanje erupcija, dok drugi graf prikazuje vrijeme između erupcija. Opcija jitter = TRUE dodaje malo nasumičnog pomaka podacima radi bolje preglednosti kad postoje višestruki zapisi s istim vrijednostima. Funkcija main koristi se za postavljanje naslova na grafove.
+par(mfrow = c(2, 1), mar = c(2, 2, 2, 2))
+stripchart(faithful$eruptions, jitter = TRUE, main = "Stripchart trajanja erupcija")
+stripchart(faithful$waiting, jitter = TRUE, main = "Stripchart vremena između erupcija")
+
+# Python
+Kako Python nema sadržan paket za gejzir, možemo uvesti dataframe sa tim podacima
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Pretvaranje skupa podataka 'faithful' u DataFrame (pod pretpostavkom da je skup podataka već dostupan)
+faithful_df = pd.DataFrame({'eruptions': faithful.eruptions, 'waiting': faithful.waiting})
+
+# Postavljanje grafova u dva reda
+plt.figure(figsize=(6, 8))
+
+# Stripchart za trajanje erupcija
+plt.subplot(2, 1, 1)
+plt.stripplot(data=faithful_df, x='eruptions', jitter=True)
+plt.title("Stripchart trajanja erupcija")
+
+# Stripchart za vrijeme između erupcija
+plt.subplot(2, 1, 2)
+plt.stripplot(data=faithful_df, x='waiting', jitter=True)
+plt.title("Stripchart vremena između erupcija")
+
+plt.tight_layout()
+plt.show()
+
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(4, 4, 2, 2))
+
+# Izrada scatter-plot grafa
+plot(
+  faithful$waiting, faithful$eruptions,
+  pch = 16, cex = 0.8,
+  xlab = "Vremena između erupcija (min)",
+  ylab = "Vrijeme erupcije (min)",
+  main = "Scatter-plot grafikon za gejzir 'Old Faithful'"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Postavljanje margina za grafikon
+plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+
+# Izrada scatter-plot grafa
+plt.scatter(faithful['waiting'], faithful['eruptions'], marker='o', s=40)
+plt.xlabel("Vremena između erupcija (min)")
+plt.ylabel("Vrijeme erupcije (min)")
+plt.title("Scatter-plot grafikon za gejzir 'Old Faithful'")
+
+# Prikaži grafikon
+plt.show()
+
+# R
+Poželjno je i sortirati podatke po veličini kako bi prikaz bio jasniji
+# Postavljanje margina za grafikon
+par(mar = c(2, 4, 1, 1))
+
+# Ispis vremena erupcija u sortiranom redoslijedu
+plot(
+  sort(faithful$eruptions),
+  pch = 1,
+  cex = 0.7,
+  cex.axis = 0.8,
+  ylab = "Vrijeme erupcije (min)",
+  cex.lab = 0.8
+)
+Možemo dodati i rug
+# Postavljanje margina za grafikon
+par(mar = c(2, 4, 1, 1))
+
+# Ispis vremena erupcija u sortiranom redoslijedu
+plot(
+  sort(faithful$eruptions),
+  pch = 1,
+  cex = 0.7,
+  cex.axis = 0.8,
+  ylab = "Vrijeme erupcije (min)",
+  cex.lab = 0.8
+)
+
+# Dodavanje "rug" (ticks) na y-osi
+rug(faithful$eruptions, side = 2)
+
+# Postavljanje margina za grafikon
+par(mar = c(2, 4, 1, 1))
+
+# Ispis vremena između erupcija u sortiranom redoslijedu
+plot(
+  sort(faithful$waiting),
+  pch = 1,
+  cex = 0.7,
+  cex.axis = 0.8,
+  ylab = "Vrijeme između erupcija (min)",
+  cex.lab = 0.8
+)
+
+# Dodavanje "rug" (ticks) na y-osi
+rug(faithful$waiting, side = 2)
+
+# Postavljanje margina za grafikon
+par(mar = c(4, 4, 2, 2))
+
+# Nacrtaj histogram vremena između erupcija
+hist(
+  faithful$eruptions,
+  xlab = "Vrijeme između erupcija (min)",
+  main = "Histogram frekvencija vremena između erupcija",
+  cex.axis = 0.7,
+  cex.main = 0.8,
+  cex.lab = 0.8,
+  ylab = "Frekvencija",
+  col = "aquamarine4"
+)
+# Python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Postavljanje margina za grafikone
+plt.figure(figsize=(8, 10))
+plt.subplots_adjust(hspace=0.5)
+
+# Ispis vremena erupcija u sortiranom redoslijedu
+plt.subplot(3, 1, 1)
+sorted_eruptions = np.sort(faithful['eruptions'])
+plt.plot(sorted_eruptions, 'o', markersize=5)
+plt.title('Vrijeme erupcija (min)')
+plt.xlabel('Redoslijed')
+plt.ylabel('Vrijeme erupcije (min)')
+
+# Dodavanje "rug" (ticks) na y-osi
+plt.subplot(3, 1, 2)
+plt.plot(sorted_eruptions, np.zeros_like(sorted_eruptions), '|', markersize=20)
+plt.title('Vrijeme erupcija s "rug" (ticks)')
+plt.xlabel('Vrijeme erupcije (min)')
+
+# Ispis vremena između erupcija u sortiranom redoslijedu
+plt.subplot(3, 1, 3)
+sorted_waiting = np.sort(faithful['waiting'])
+plt.plot(sorted_waiting, 'o', markersize=5)
+plt.title('Vrijeme između erupcija (min)')
+plt.xlabel('Redoslijed')
+plt.ylabel('Vrijeme između erupcija (min)')
+
+plt.show()
+
+# Nacrtaj histogram vremena između erupcija
+plt.figure(figsize=(8, 5))
+plt.hist(sorted_eruptions, bins=15, color='aquamarine', edgecolor='black')
+plt.title('Histogram frekvencija vremena između erupcija')
+plt.xlabel('Vrijeme između erupcija (min)')
+plt.ylabel('Frekvencija')
+
+plt.show()
+
+# R
+# Postavljanje margina za grafikon
+par(mar = c(5, 4, 2, 2))
+
+# Nacrtaj histogram vremena između erupcija
+hist(
+  faithful$eruptions,
+  main = "Histogram relativnih frekvencija",
+  breaks = 20,
+  probability = TRUE,
+  cex.axis = 0.7,
+  cex.main = 0.8,
+  xlab = "Vrijeme između erupcija (min)",
+  cex.lab = 0.8,
+  ylab = "Frekvencija",
+  col = "aquamarine4"
+)
+
+# Dodaj krivulju glatke gustoće
+points(
+  density(faithful$eruptions, bw = 0.1),
+  type = 'l',
+  col = 'red',
+  lwd = 2
+)
+
+# Python
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import gaussian_kde
+
+# Postavljanje margina za grafikon
+plt.figure(figsize=(8, 6))
+plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+
+# Nacrtaj histogram vremena između erupcija
+plt.hist(
+    faithful['eruptions'],
+    bins=20,
+    density=True,
+    color='aquamarine4',
+    edgecolor='black'
+)
+plt.title('Histogram relativnih frekvencija')
+plt.xlabel('Vrijeme između erupcija (min)')
+plt.ylabel('Frekvencija')
+
+# Izračunaj i nacrtaj glatku krivulju gustoće
+density = gaussian_kde(faithful['eruptions'])
+x = np.linspace(faithful['eruptions'].min(), faithful['eruptions'].max(), 1000)
+plt.plot(x, density(x), 'r', linewidth=2)
+
+plt.show()
+
+# R
+Završit ćemo ovu malu analizu podataka o gejziru "Old Faithful" analizom korelacije između vremena trajanja erupcija i vremena između njih. Prikazani dijagram raspršenja sugerira da postoji visoka pozitivna korelacija između tih podataka. To isto potvrđuje i izračun korelacije:
+cor(faithful$waiting, faithful$eruptions)
+# [1] 0.9008112
+
+# Python
+import pandas as pd
+import numpy as np
+
+# Učitaj podatke
+data = pd.read_csv("putanja/do/podataka.csv")  # Zamijenite "putanja/do/podataka.csv" sa stvarnom putanjom do datoteke
+
+# Izračunaj korelaciju
+correlation = np.corrcoef(data['waiting'], data['eruptions'])[0, 1]
+print(f"Korelacija: {correlation}")
+
+# OVO JE KRAJ 2. poglavlja
