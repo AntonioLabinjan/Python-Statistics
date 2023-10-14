@@ -1,0 +1,109 @@
+# Ovdje nema programskih odsječaka sve do napomene 3.3.16
+# R
+## Prva petlja (ugnježdene)
+k <- 0
+for (i1 in 1:n1) {
+  for (i2 in 1:n2) {
+    ...
+    for (im in 1:nm) {
+      k <- k + 1
+    }
+  }
+}
+
+## Druga petlja (1 ispod druge)
+k <- 0
+for (i1 in 1:n1) {
+  k <- k + 1
+}
+for (i2 in 1:n2) {
+  k <- k + 1
+}
+...
+for (im in 1:nm) {
+  k <- k + 1
+}
+
+# Python
+## Prva petlja (ugnježdene)
+k = 0
+for i1 in range(1, n1 + 1):
+    for i2 in range(1, n2 + 1):
+        # ...
+        for im in range(1, nm + 1):
+            k += 1
+
+## Druga petlja (1 ispod druge)
+k = 0
+for i1 in range(1, n1 + 1):
+    k += 1
+for i2 in range(1, n2 + 1):
+    k += 1
+# ...
+for im in range(1, nm + 1):
+    k += 1
+
+# R
+## Primjena R-a za računanje vjerojatnosti
+# Računanje faktorijela od 15
+print(factorial(15), digits = 15)
+
+# Izračun binomnog koeficijenta (10 nad 4)
+choose(10, 4)
+R koristi funkciju factorial() za računanje faktorijela broja 15 i funkciju choose() za izračun binomnog koeficijenta "10 nad 4".
+# Definiramo indekse ind
+ind <- c(0:10)
+
+# Izračun binomnih koeficijenata za 10 nad ind
+result <- choose(10, ind)
+
+# Python
+Da bismo dobili ekvivalent u Pythonu za računanje faktorijela i binomnog koeficijenta, možemo koristiti biblioteku math. Ovdje je Python ekvivalent za oba izračuna:
+import math
+
+# Računanje faktorijela broja 15
+fact_15 = math.factorial(15)
+print(fact_15)
+
+# Izračun binomnog koeficijenta "10 nad 4"
+binomial_coef = math.comb(10, 4)
+print(binomial_coef)
+
+# R
+Naravno, možemo izračunati razne vjerojatnosti i jesmo li izračunali ispravno možemo provjeriti pomoću generiranja slučajnih uzoraka korištenjem funkcije sample(). Ako želimo generirati uređeni uzorak od 5 brojeva od 10 dostupnih brojeva bez ponavljanja, koristimo sljedeći kod:
+sample(10, 5)
+Ovdje smo generirali uzorak 5 brojeva od 1 do 10. Sada možemo koristiti funkciju set.seed() za postavljanje početnog stanja generatora slučajnih brojeva kako bismo rezultate simulacije reproducirali.
+
+Primjer:
+set.seed(1)
+sample(10, 5)
+Ovo će nam dati isti uzorak svaki put kad postavimo sjeme generatora na 1.
+set.seed(2022)
+sample(10, 5)
+Ovo će nam dati drugačiji uzorak kad postavimo sjeme generatora na 2022.
+
+# Python
+import random
+
+# Generiraj uzorak od 5 brojeva od 1 do 10 bez ponavljanja
+uzorak = random.sample(range(1, 11), 5)
+print(uzorak)
+
+import random
+
+# Postavi sjeme generatora slučajnih brojeva na 1
+random.seed(1)
+
+# Generiraj uzorak od 5 brojeva od 1 do 10 bez ponavljanja
+uzorak1 = random.sample(range(1, 11), 5)
+print(uzorak1)
+
+# Postavi sjeme generatora slučajnih brojeva na 2022
+random.seed(2022)
+
+# Generiraj drugačiji uzorak od 5 brojeva od 1 do 10 bez ponavljanja
+uzorak2 = random.sample(range(1, 11), 5)
+print(uzorak2)
+
+
+### DOŠA SAN DO FUNKCIJE REPLICATE NA 125. STRANICI
