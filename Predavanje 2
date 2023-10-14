@@ -1,5 +1,5 @@
 # Prije djela 2.1.2 nema programskih kodova
-
+## NAPOMENA:U PYTHONU UNUTAR LISTI kvant UNOSIMO SVOJE VLASTITE PODATKE
 # R
 Pogledajmo kako bismo u R-u napravili iste tablice i prikazali podatke grafički. Prvo ćemo prevesti tablicu s originalno dobivenim podacima u R data frame, kojeg ćemo nazvati "krgrupa".
 
@@ -880,3 +880,272 @@ print("equidist:", True)
 print("class_attr:", "histogram")
 
 plt.show()
+
+# R
+par(mar = c(4, 4, 2, 1))
+hist(
+  kvant$Visina,
+  main = "Visina ispitanika",
+  xlab = "Visina",
+  ylab = "Relativna frekvencija",
+  breaks = length(kvant$Visina),
+  cex.axis = 0.75,
+  cex.main = 0.85,
+  cex.lab = 0.8,
+  col = "darkmagenta",
+  probability = TRUE
+)
+
+# Python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Podaci o visini
+visina = kvant['Visina']  # Zamijenite ovo sa stvarnim podacima
+
+# Postavljanje stila grafikona
+plt.style.use('ggplot')
+
+# Postavljanje parametara grafikona
+plt.figure(figsize=(6, 6))  # Veličina grafikona
+plt.hist(
+    visina,
+    bins=len(visina),
+    color='darkmagenta',
+    edgecolor='black',
+    density=True  # Omogućavanje relativne frekvencije
+)
+plt.title('Visina ispitanika', fontsize=14)
+plt.xlabel('Visina', fontsize=12)
+plt.ylabel('Relativna frekvencija', fontsize=12)
+
+# Prilagodba veličine oznaka na osama
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+
+plt.show()
+
+# R
+par(mar = c(4, 4, 2, 1))
+hist(
+  kvant$Visina,
+  main = "Visina ispitanika - različite širine",
+  xlab = "Visina",
+  ylab = "Relativna frekvencija",
+  ylim = c(0, 0.06),
+  cex.axis = 0.75,
+  cex.main = 0.85,
+  cex.lab = 0.8,
+  breaks = c(165, 168, 172, 178, 180, 182, 192),
+  col = "darkmagenta",
+  probability = TRUE
+)
+
+# Python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Podaci o visini
+visina = kvant['Visina']  # Zamijenite ovo sa stvarnim podacima
+
+# Postavljanje stila grafikona
+plt.style.use('ggplot')
+
+# Postavljanje parametara grafikona
+plt.figure(figsize=(6, 6))  # Veličina grafikona
+bin_edges = [165, 168, 172, 178, 180, 182, 192]
+plt.hist(
+    visina,
+    bins=bin_edges,
+    color='darkmagenta',
+    edgecolor='black',
+    density=True  # Omogućavanje relativne frekvencije
+)
+plt.title('Visina ispitanika - različite širine', fontsize=14)
+plt.xlabel('Visina', fontsize=12)
+plt.ylabel('Relativna frekvencija', fontsize=12)
+plt.ylim(0, 0.06)
+
+# Prilagodba veličine oznaka na osama
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+
+plt.show()
+
+# R
+Završit ćemo ovaj kratki pregled grafičkog prikaza podataka korištenjem jednog tipa grafa, takozvanog boxplota
+(funkcija u R-u je `boxplot()`). Boxplot se na engleskom naziva "box and whiskers diagram", a može se prevesti
+i kao "pravokutni dijagram". On nam je koristan u kontekstu analize grupiranja podataka, njihovog rasporeda i identifikacije ekstremnih vrijednosti (outliera).
+
+par(mar = c(2, 2, 2, 1))
+boxplot(
+  kvant$Visina,
+  cex.axis = 0.7,
+  cex.main = 0.8,
+  main = "Boxplot visine osoba"
+)
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci o visini
+visina = kvant['Visina']  # Zamijenite ovo sa stvarnim podacima
+
+# Postavljanje stila grafikona
+plt.style.use('ggplot')
+
+# Postavljanje parametara grafikona
+plt.figure(figsize=(6, 6))  # Veličina grafikona
+plt.boxplot(
+    visina,
+    vert=False,  # Horizontalni prikaz
+    widths=0.6,  # Širina "pravokutnih" dijelova
+    patch_artist=True,  # Omogućava stilizaciju "pravokutnih" dijelova
+    flierprops=dict(marker='o', markersize=5, markerfacecolor='red', markeredgecolor='red')  # Stilizacija outlier-a
+)
+plt.title('Boxplot visine osoba', fontsize=14)
+plt.xlabel('Visina', fontsize=12)
+
+# Prilagodba veličine oznaka na osama
+plt.yticks([])  # Uklanjanje oznaka s y-ose
+
+plt.show()
+
+#R
+Horizontalni boxplot
+par(mar = c(2, 2, 2, 1))
+boxplot(
+  kvant$BMI,
+  main = "Boxplot indeksa tjelesne mase",
+  cex.axis = 0.7,
+  cex.main = 0.8,
+  horizontal = TRUE
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci o indeksu tjelesne mase (BMI)
+bmi = kvant['BMI']  # Zamijenite ovo sa stvarnim podacima
+
+# Postavljanje stila grafikona
+plt.style.use('ggplot')
+
+# Postavljanje parametara grafikona
+plt.figure(figsize=(6, 3))  # Veličina grafikona (prilagodite prema potrebi)
+plt.boxplot(
+    bmi,
+    vert=False,  # Horizontalni prikaz
+    widths=0.6,  # Širina "pravokutnih" dijelova
+    patch_artist=True,  # Omogućava stilizaciju "pravokutnih" dijelova
+)
+plt.title('Boxplot indeksa tjelesne mase', fontsize=14)
+plt.xlabel('BMI', fontsize=12)
+
+# Prilagodba veličine oznaka na osama
+plt.yticks([])  # Uklanjanje oznaka s y-ose
+
+plt.show()
+
+# R
+Na jednom grafu možemo pokazati podatke za sva 3 vektora
+# Postavite odgovarajuće margine za grafikon
+par(mar = c(2, 2, 2, 1))
+
+# Nacrtajte boxplot za odabrane kolone
+boxplot(
+  kvant[, c(2, 3, 4)],
+  cex.axis = 0.8,
+  main = "Boxplot svih BMI podataka"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci o BMI
+bmi_data = kvant[:, [1, 2, 3]]  # Zamijenite ovo sa stvarnim podacima
+
+# Postavite odgovarajuće margine za grafikon
+plt.figure(figsize=(6, 3))  # Veličina grafikona
+plt.style.use('ggplot')
+
+# Nacrtajte boxplot za odabrane kolone
+plt.boxplot(bmi_data, vert=False, widths=0.6, patch_artist=True)
+plt.title('Boxplot svih BMI podataka', fontsize=14)
+plt.xlabel('BMI', fontsize=12)
+plt.yticks([])  # Uklonite oznake s y-ose
+
+plt.show()
+
+# R 
+Možemo prikazati i sva 3 boxplota 1 do drugog da bude preglednije
+# Postavite raspored za prikaz boxplotova
+par(mfrow = c(1, 3))
+
+# Nacrtajte boxplot za visinu
+boxplot(
+  kvant$Visina,
+  main = "Visina"
+)
+
+# Nacrtajte boxplot za težinu
+boxplot(
+  kvant$Tezina,
+  main = "Težina"
+)
+
+# Nacrtajte boxplot za BMI
+boxplot(
+  kvant$BMI,
+  main = "BMI"
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Podaci za boxplotove
+visina_data = kvant['Visina']  # Zamijenite ovo sa stvarnim podacima
+tezina_data = kvant['Tezina']  # Zamijenite ovo sa stvarnim podacima
+bmi_data = kvant['BMI']  # Zamijenite ovo sa stvarnim podacima
+
+# Postavite raspored za prikaz boxplotova
+plt.figure(figsize=(12, 4))  # Veličina grafikona
+plt.style.use('ggplot')
+
+# Nacrtajte boxplot za visinu
+plt.subplot(131)
+plt.boxplot(visina_data, vert=False, widths=0.6, patch_artist=True)
+plt.title('Visina')
+
+# Nacrtajte boxplot za težinu
+plt.subplot(132)
+plt.boxplot(tezina_data, vert=False, widths=0.6, patch_artist=True)
+plt.title('Težina')
+
+# Nacrtajte boxplot za BMI
+plt.subplot(133)
+plt.boxplot(bmi_data, vert=False, widths=0.6, patch_artist=True)
+plt.title('BMI')
+
+plt.tight_layout()  # Organizira panel
+plt.show()
+
+# R
+Koeficijent korelacije
+U R-u je implementirana funkcija cor() koja računa korelaciju 2 niza brojeva
+# Primjer korištenja funkcije cor() za izračunavanje koeficijenta korelacije
+xv <- c(-2, 0, 2, 4, 4)
+yv <- c(2, 2, 3, 4, 4)
+cor(xv, yv)
+
+Rezultat:   0.958706
+
+# Python
+import numpy as np
+
+# Primjer korištenja funkcije corrcoef() za izračunavanje koeficijenta korelacije
+xv = np.array([-2, 0, 2, 4, 4])
+yv = np.array([2, 2, 3, 4, 4])
+
+correlation_coefficient = np.corrcoef(xv, yv)[0, 1]
+print("Rezultat:", correlation_coefficient)
+
