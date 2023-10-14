@@ -792,4 +792,91 @@ plt.ylabel('Broj pojavljivanja')
 
 plt.show()
 
-# FRMA SAN SE NA 38. stranici
+# R 
+Možemo mijenjati razine parametara histograma
+par(mar = c(4, 4, 1, 1))
+h <- hist(
+  kvant$Visina,
+  main = "Visina ispitanika",
+  xlab = "Visina",
+  ylab = "Frekvencija pojavljivanja",
+  breaks = length(kvant$Visina),
+  cex.axis = 0.7,
+  cex.main = 0.8,
+  cex.lab = 0.8,
+  col = "aquamarine3"
+)
+
+# Python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Podaci
+visina = kvant['Visina']  # Ovdje ubacimo naše podatke
+
+# Postavljanje stila grafikona
+plt.style.use('ggplot')
+
+# Postavljanje parametara grafikona
+plt.figure(figsize=(6, 6))  # Veličina grafikona
+plt.hist(visina, bins=len(visina), color='aquamarine', edgecolor='black')
+plt.title('Visina ispitanika', fontsize=14)
+plt.xlabel('Visina', fontsize=12)
+plt.ylabel('Frekvencija pojavljivanja', fontsize=12)
+
+# Prilagodba veličine oznaka na osima
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+
+plt.show()
+
+# R
+Možemo vidjeti od čega se naš histogram uopće sastoji
+h$breaks
+# [1] 164 166 168 170 172 174 176 178 180 182 184 186 188 190 192
+
+h$counts
+# [1] 1 1 1 0 0 3 1 1 1 2 0 0 0 1
+
+h$density
+# [1] 0.04166667 0.04166667 0.04166667 0.00000000 0.00000000 0.12500000 0.04166667 0.04166667 0.04166667 0.08333333 0.00000000 0.00000000 0.00000000 0.04166667
+
+h$mids
+# [1] 165 167 169 171 173 175 177 179 181 183 185 187 189 191
+
+h$xname
+# [1] "kvant$Visina"
+
+h$equidist
+# [1] TRUE
+
+attr(h, "class")
+# [1] "histogram"
+
+# Python
+Python  koristi numpy.histogram za izračunavanje histograma i pristupa relevantnim podacima poput granica (breaks), brojača (counts), gustine (density), srednjih tačaka (mids), i drugih sličnih podataka.
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Podaci o visini
+visina = kvant['Visina']  # Zamijenite ovo sa stvarnim podacima
+
+# Izračunavanje histograma
+hist, bin_edges = np.histogram(visina, bins='auto', density=False)
+
+# Prikazivanje histograma
+plt.hist(visina, bins=bin_edges, color='aquamarine', edgecolor='black')
+plt.title('Visina ispitanika', fontsize=14)
+plt.xlabel('Visina', fontsize=12)
+plt.ylabel('Frekvencija pojavljivanja', fontsize=12)
+
+# Pristup izračunatim podacima
+print("breaks:", bin_edges)
+print("counts:", hist)
+print("density:", hist / len(visina))
+print("mids:", (bin_edges[1:] + bin_edges[:-1]) / 2)
+print("xname:", "visina")
+print("equidist:", True)
+print("class_attr:", "histogram")
+
+plt.show()
