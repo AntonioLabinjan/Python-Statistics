@@ -1149,3 +1149,85 @@ yv = np.array([2, 2, 3, 4, 4])
 correlation_coefficient = np.corrcoef(xv, yv)[0, 1]
 print("Rezultat:", correlation_coefficient)
 
+# R
+# Učitavanje podataka za težinu, visinu i indeks tjelesne mase
+kvant$Tezina <- c(60, 80, 85, 84, 62, 65, 86, 86, 95, 78, 70, 68)
+kvant$Visina <- c(165, 180, 175, 184, 168, 175, 184, 192, 182, 178, 175, 170)
+kvant$BMI <- c(22.03857, 24.69136, 27.75510, 24.81096, 21.96712, 21.22449, 25.40170, 23.32899, 28.68011, 24.61810, 22.85714, 23.52941)
+
+# Izračunajte korelaciju između visine i BMI
+correlation_height_bmi <- cor(kvant$Visina, kvant$BMI)
+cat("Korelacija između visine i BMI:", correlation_height_bmi, "\n")
+
+# Izračunajte korelaciju između visine i težine
+correlation_height_weight <- cor(kvant$Visina, kvant$Tezina)
+cat("Korelacija između visine i težine:", correlation_height_weight, "\n")
+
+# Python
+import numpy as np
+
+# Učitavanje podataka za težinu, visinu i indeks tjelesne mase
+tezina = np.array([60, 80, 85, 84, 62, 65, 86, 86, 95, 78, 70, 68])
+visina = np.array([165, 180, 175, 184, 168, 175, 184, 192, 182, 178, 175, 170])
+bmi = np.array([22.03857, 24.69136, 27.75510, 24.81096, 21.96712, 21.22449, 25.40170, 23.32899, 28.68011, 24.61810, 22.85714, 23.52941])
+
+# Izračunajte korelaciju između visine i BMI
+correlation_height_bmi = np.corrcoef(visina, bmi)[0, 1]
+print("Korelacija između visine i BMI:", correlation_height_bmi)
+
+# Izračunajte korelaciju između visine i težine
+correlation_height_weight = np.corrcoef(visina, tezina)[0, 1]
+print("Korelacija između visine i težine:", correlation_height_weight)
+
+# R
+# Prikaz zavisnosti između visine i BMI korištenjem scatterplot-a
+par(mar = c(2, 2, 2, 1))
+plot(
+  kvant$Visina,
+  kvant$BMI,
+  main = "Visina i BMI",
+  cex.axis = 0.8,
+  cex.main = 0.8
+)
+
+# Python
+import matplotlib.pyplot as plt
+
+# Prikaz zavisnosti između visine i BMI korištenjem scatterplot-a
+plt.figure(figsize=(6, 4))  # Veličina grafikona
+plt.style.use('ggplot')
+
+plt.scatter(kvant['Visina'], kvant['BMI'], marker='o', s=40)
+plt.title("Visina i BMI")
+plt.xlabel("Visina")
+plt.ylabel("BMI")
+
+plt.show()
+
+# R
+# Možemo iskoristiti funkciju pairs() za prikaz grafova zavisnosti između kvantitativnih nizova
+# Na primjer, za prikaz zavisnosti visine, težine i BMI
+
+pairs(
+  kvant[, c(3, 4, 5)],
+  main = "Zavisnost između visine, težine i BMI",
+  pch = 19,  # Veličina točaka
+  cex.labels = 1.5,  # Veličina oznaka
+  cex.axis = 1.2  # Veličina oznaka osi
+)
+
+# Python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Možemo iskoristiti pairplot za prikaz grafova zavisnosti između kvantitativnih nizova
+# Na primjer, za prikaz zavisnosti visine, težine i BMI
+
+data = kvant[['Visina', 'Tezina', 'BMI']]
+sns.set(style="ticks")
+sns.pairplot(data, markers='o', plot_kws={'s': 40})
+plt.suptitle("Zavisnost između visine, težine i BMI", y=1.02)
+
+plt.show()
+
+# FRMA SAN NA NASLOVU 2.7
