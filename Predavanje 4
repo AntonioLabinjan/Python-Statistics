@@ -248,3 +248,57 @@ DeMere1 = np.random.randint(1, 7, size=(100000, 4))
 
 # Računamo postotak puta kada je maksimalna vrijednost 6
 print(np.sum(np.max(DeMere1, axis=1) == 6) / 100000)
+
+# R
+# Postavljamo početno stanje generatora slučajnih brojeva
+set.seed(42)
+
+# Postavljamo broj ponavljanja i broj bacanja
+brpon <- 12
+brbac <- 4
+brojac <- 0
+
+# Generiramo simulaciju bacanja kockica
+DePom <- replicate(brpon, sample(6, brbac, replace = TRUE))
+
+# Računamo procijenjenu vjerojatnost korištenjem petlji i if-ova
+for (i in 1:brpon) {
+  j <- 1
+  while (j <= brbac) {
+    if (DePom[j, i] == 6) {
+      brojac <- brojac + 1
+      j <- brbac + 1
+    } else
+      j <- j + 1
+  }
+}
+
+# Ispisujemo procijenjenu vjerojatnost
+cat("Procjenjena vjerojatnost je", brojac / brpon)
+
+# Python
+import numpy as np
+
+# Postavljamo početno stanje generatora slučajnih brojeva
+np.random.seed(42)
+
+# Postavljamo broj ponavljanja i broj bacanja
+brpon = 12
+brbac = 4
+brojac = 0
+
+# Generiramo simulaciju bacanja kockica
+DePom = np.random.randint(1, 7, size=(brbac, brpon))
+
+# Računamo procijenjenu vjerojatnost korištenjem petlji i if-ova
+for i in range(brpon):
+    j = 0
+    while j < brbac:
+        if DePom[j, i] == 6:
+            brojac += 1
+            j = brbac
+        else:
+            j += 1
+
+# Ispisujemo procijenjenu vjerojatnost
+print("Procijenjena vjerojatnost je", brojac / brpon)
