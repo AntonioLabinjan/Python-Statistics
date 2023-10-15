@@ -106,4 +106,114 @@ uzorak2 = random.sample(range(1, 11), 5)
 print(uzorak2)
 
 
-### DOŠA SAN DO FUNKCIJE REPLICATE NA 125. STRANICI
+# R
+Ukoliko želimo kreirati veći broj uzoraka, možemo koristiti funkciju replicate
+# Generiranje 13 uzoraka od po 5 nasumičnih brojeva od 1 do 10 bez ponavljanja
+replicate(13, sample(10,5))
+
+Možemo definirati i uzorke s ponavljanjem, tako da uključimo argument replace i postavimo ga na TRUE
+replicate(13,sample(10,5,replace=TRUE))
+
+# Python
+U Pythonu koristimo funkciju random koju je potrebno importirati
+import random
+
+# Generiranje 13 uzoraka od po 5 nasumičnih brojeva od 1 do 10 bez ponavljanja
+uzorci = [random.sample(range(1, 11), 5) for _ in range(13)]
+
+import random
+
+# Generiranje 13 uzoraka od po 5 nasumičnih brojeva od 1 do 10 s ponavljanjem
+uzorci_s_ponavljanjem = [random.choices(range(1, 11), k=5) for _ in range(13)]
+
+# R
+# Generiranje uzorka znakova duljine 5 iz niza znakova a, b, c, d, e, f, g, h, i, j
+uzorak_znakova <- sample(c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 5, replace = TRUE)
+
+# Ispis uzorka
+uzorak_znakova
+
+# Python
+import random
+
+# Generiranje uzorka znakova duljine 5 iz niza znakova a, b, c, d, e, f, g, h, i, j
+niz_znakova = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+uzorak_znakova = random.choices(niz_znakova, k=5)
+
+# Ispis uzorka
+print(uzorak_znakova)
+
+#R
+Ovaj kod prvo učitava paket "permute", a zatim koristi funkciju allPerms za generiranje svih permutacija iz vektora brojeva 1, 2 i 3. Rezultat će sadržavati sve permutacije tih brojeva.
+library("permute")
+allPerms(c(1,2,3))
+
+R nam može pomoći u izračunu vjerojatnosti iz primjera 3.4.5(rođendani). Naime,za k=23 možemo jednostavno izračunati vjerojatnost da će barem dvoje od 23 ljudi imati rođendan na isti dan
+# Broj ljudi
+k <- 23
+
+# Izračun vjerojatnosti da barem dvoje od 23 ljudi ima isti rođendan
+p <- 1 - prod((365 - k + 1):365) / 365^k
+
+# Ispis rezultata
+cat("Tražena vjerojatnost je jednaka", p)
+
+# Python
+# Broj ljudi
+k = 23
+
+# Izračun vjerojatnosti da barem dvoje od 23 ljudi ima isti rođendan
+p = 1 - (365 / 365)  # Početna vjerojatnost da nema zajedničkog rođendana
+
+for i in range(k):
+    p *= (365 - i) / 365  # Izračun vjerojatnosti da nema zajedničkog rođendana za svaku osobu
+
+p = 1 - p  # Konačna vjerojatnost da barem dvoje ljudi imaju isti rođendan
+
+# Ispis rezultata
+print("Tražena vjerojatnost je jednaka", p)
+
+# R
+# Zanimljivo je da R ima ugrađene funkcije pbirthday() i qbirthday() koje računaju vjerojatnost rođendana.
+
+# Izračunajmo vjerojatnost da će barem dvije osobe (od ukupno jako puno) imati rođendan istog dana.
+vjerojatnost_za_23_osobe <- pbirthday(23)[1]
+cat("Vjerojatnost da će barem dvije osobe od 23 imati rođendan istog dana je:", vjerojatnost_za_23_osobe, "\n")
+
+# Također možemo izračunati minimalan broj ljudi koji trebaju biti prisutni da bi se s vjerojatnošću od 50% barem dvije osobe imale rođendan istog dana.
+minimalan_broj_osoba <- qbirthday(0.5)[1]
+cat("Minimalan broj osoba potreban za vjerojatnost od 50% da barem dvije osobe imaju rođendan istog dana je:", minimalan_broj_osoba, "\n")
+
+# Ako želimo vjerojatnost da će barem dvije osobe imati rođendan istog dana, uz pretpostavku da se broj ljudi zaista zove "3", možemo to izračunati ovako:
+vjerojatnost_sa_3_osobe <- pbirthday(23, coincide = 3)[1]
+cat("Vjerojatnost da će barem dvije osobe imati rođendan istog dana uz pretpostavku da se broj ljudi zove '3' je:", vjerojatnost_sa_3_osobe, "\n")
+
+# Također možemo izračunati minimalan broj ljudi koji trebaju biti prisutni da bi se s vjerojatnošću od 50% barem dvije osobe imale rođendan istog dana, uz pretpostavku da se broj ljudi zove "3".
+minimalan_broj_osoba_sa_3_osobe <- qbirthday(0.5, coincide = 3)[1]
+cat("Minimalan broj osoba potreban za vjerojatnost od 50% da barem dvije osobe imaju rođendan istog dana uz pretpostavku da se broj ljudi zove '3' je:", minimalan_broj_osoba_sa_3_osobe, "\n")
+
+# Python
+Python nema ugrađene funkcije za rođendane, ali može ih se ručno kreirati
+# Funkcija za izračun vjerojatnosti da će barem dvije osobe (od ukupno jako puno) imati rođendan istog dana.
+def vjerojatnost_rođendana(k):
+    p = 1
+    for i in range(k):
+        p *= (365 - i) / 365
+    return 1 - p
+
+# Funkcija za izračun minimalnog broja ljudi potrebnog za postizanje vjerojatnosti od 50% da barem dvije osobe imaju rođendan istog dana.
+def minimalni_broj_osoba(vjerojatnost):
+    k = 0
+    p = 1
+    while p > 1 - vjerojatnost:
+        k += 1
+        p *= (365 - k) / 365
+    return k
+
+# Izračun vjerojatnosti za 23 osobe
+vjerojatnost_za_23_osobe = vjerojatnost_rođendana(23)
+print(f"Vjerojatnost da će barem dvije osobe od 23 imati rođendan istog dana je: {vjerojatnost_za_23_osobe}")
+
+# Izračun minimalnog broja osoba za vjerojatnost od 50%
+minimalan_broj_osoba = minimalni_broj_osoba(0.5)
+print(f"Minimalan broj osoba potreban za vjerojatnost od 50% da barem dvije osobe imaju rođendan istog dana je: {minimalan_broj_osoba}")
