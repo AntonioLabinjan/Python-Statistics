@@ -177,3 +177,74 @@ DePom = [[random.randint(1, 6) for _ in range(4)] for _ in range(12)]
 # Ispis rezultata simulacije
 for row in DePom:
     print(row)
+
+# R
+# Izračun maksimalnih vrijednosti u svakom stupcu
+DePom2 <- apply(DePom, 2, FUN = max)
+
+# Ispis maksimalnih vrijednosti
+DePom2
+[1] 5 4 5 6 3 5 4 6 6 6 5 5
+
+# Izračun postotka puta kada je maksimalna vrijednost 6
+sum(DePom2 == 6) / 12
+[1] 0.3333333
+
+# Python
+import numpy as np
+
+# Generiranje uzorka podataka
+np.random.seed(42)
+DePom = np.random.randint(1, 7, size=(12, 12))
+
+# Izračun maksimalnih vrijednosti u svakom stupcu
+DePom2 = np.max(DePom, axis=0)
+
+# Ispis maksimalnih vrijednosti
+print(DePom2)
+
+# Izračun postotka puta kada je maksimalna vrijednost 6
+count_6 = np.sum(DePom2 == 6)
+percentage_6 = count_6 / 12
+print(percentage_6)
+
+# R
+# Postavljamo širinu konzole radi bolje čitljivosti
+options(width=75)
+
+# Prikazujemo logički vektor koji označava je li maksimalna vrijednost u svakom stupcu jednaka 6
+DePom2 == 6
+
+# Računamo broj puta kada je maksimalna vrijednost 6
+sum(DePom2 == 6)
+
+# Postavljamo početno stanje generatora slučajnih brojeva
+set.seed(42)
+
+# Generiramo 100,000 simulacija bacanja kockica
+DeMere1 <- replicate(100000, sample(6, 4, replace=TRUE))
+
+# Računamo postotak puta kada je maksimalna vrijednost 6
+sum(apply(DeMere1, 2, FUN = max) == 6) / 100000
+
+# Python
+import numpy as np
+
+# Postavljamo širinu za bolju čitljivost
+np.set_printoptions(linewidth=75)
+
+# Generiramo simulaciju bacanja kockica
+np.random.seed(42)
+DePom = np.random.randint(1, 7, size=(12, 4))
+
+# Ispisujemo logički vektor koji označava jesu li maksimalne vrijednosti u svakom stupcu jednake 6
+print(DePom == 6)
+
+# Računamo broj puta kada je maksimalna vrijednost 6
+print(np.sum(DePom == 6))
+
+# Generiramo simulacije bacanja kockica
+DeMere1 = np.random.randint(1, 7, size=(100000, 4))
+
+# Računamo postotak puta kada je maksimalna vrijednost 6
+print(np.sum(np.max(DeMere1, axis=1) == 6) / 100000)
