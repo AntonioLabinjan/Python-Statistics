@@ -106,3 +106,74 @@ prosjecna_vjerojatnost_100k = np.mean(maksimalne_vrijednosti_100k)
 
 # Ispis prosječne vjerojatnosti za 100.000 ponavljanja
 print(prosjecna_vjerojatnost_100k)
+
+# R
+# Postavljanje početnog stanja generatora slučajnih brojeva
+set.seed(42)
+
+# Generiranje 100.000 simulacija za 24 bacanja dviju kockica
+DeMere21 <- replicate(100000, sample(6, 24, replace = TRUE))
+DeMere22 <- replicate(100000, sample(6, 24, replace = TRUE))
+
+# Izračun maksimalnih vrijednosti za svaku simulaciju
+maks2 <- apply((DeMere21 * DeMere22) %/% 36, 2, FUN = max)
+
+# Ispis prosječne vjerojatnosti da će pasti dvije šestice nakon 24 bacanja
+prosjecna_vjerojatnost_24_bacanja <- sum(maks2) / 100000
+print(prosjecna_vjerojatnost_24_bacanja)
+
+# Python
+import numpy as np
+
+# Postavljanje početnog stanja generatora slučajnih brojeva
+np.random.seed(42)
+
+# Broj simulacija
+n_simulations = 100000
+
+# Broj bacanja i broj kockica
+n_bacanja = 24
+n_kockica = 2
+
+# Simulacija bacanja kockica
+kockice = np.random.randint(1, 7, size=(n_simulations, n_bacanja, n_kockica))
+
+# Provjerava jesu li oba rezultata u svakom bacanju jednaka 6 (šestice)
+is_šestica = (kockice == 6).all(axis=2)
+
+# Računanje maksimalnog broja šestica u 24 bacanja
+maksimalne_šestice = is_šestica.sum(axis=1)
+
+# Računanje prosječne vjerojatnosti
+prosjecna_vjerojatnost = (maksimalne_šestice >= 2).mean()
+
+print(f"Prosječna vjerojatnost da će pasti dvije šestice nakon 24 bacanja: {prosjecna_vjerojatnost:.5f}")
+
+# R
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+set.seed(42)
+
+# Simulacija bacanja četiri kockice 12 puta
+DePom <- replicate(12, sample(6, 4, replace = TRUE))
+
+# Ispis rezultata simulacije
+DePom
+
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    1    2    1    6    3    4    4    2    3     4     4     2
+ [2,]    5    4    4    4    1    5    2    1    6     6     5     3
+ [3,]    1    2    1    2    1    5    4    2    2     2     4     1
+ [4,]    1    2    5    2    3    5    3    6    4     5     2     2
+
+# Python
+import random
+
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+random.seed(42)
+
+# Simulacija bacanja četiri kockice 12 puta
+DePom = [[random.randint(1, 6) for _ in range(4)] for _ in range(12)]
+
+# Ispis rezultata simulacije
+for row in DePom:
+    print(row)
