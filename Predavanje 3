@@ -217,3 +217,105 @@ print(f"Vjerojatnost da će barem dvije osobe od 23 imati rođendan istog dana j
 # Izračun minimalnog broja osoba za vjerojatnost od 50%
 minimalan_broj_osoba = minimalni_broj_osoba(0.5)
 print(f"Minimalan broj osoba potreban za vjerojatnost od 50% da barem dvije osobe imaju rođendan istog dana je: {minimalan_broj_osoba}")
+
+# R
+Ovaj R kod izračunava i prikazuje vjerojatnost "među ljudima barem dvoje ima isti rođendan" za broj ljudi od 1 do 100 na grafu. Oznake osi x su "Broj ljudi", a oznaka osi y je "Vjerojatnost višestrukih rođendana".
+# Postavljanje margina za graf
+par(mar = c(4, 4, 2, 2))
+
+# Inicijalizacija vektora za pohranu vjerojatnosti
+p <- numeric(100)
+
+# Izračun vjerojatnosti za svaki broj ljudi od 1 do 100
+for (k in 1:100) {
+  p[k] <- 1 - prod((365 - k + 1):365) / 365^k
+}
+
+# Kreiranje grafa
+plot(
+  p,
+  pch = 16,
+  cex = 0.8,
+  xlab = "Broj ljudi",
+  ylab = "Vjerojatnost višestrukih rođendana"
+)
+# Python
+Python koristi biblioteku Matplotlib za izradu grafa i matematičke operacije za izračun vjerojatnosti. Rezultat je graf koji prikazuje promjenu vjerojatnosti za različite brojeve ljudi.
+import matplotlib.pyplot as plt
+import math
+
+# Inicijalizacija vektora za pohranu vjerojatnosti
+p = []
+
+# Izračun vjerojatnosti za svaki broj ljudi od 1 do 100
+for k in range(1, 101):
+    vjerojatnost = 1 - math.prod([(365 - i) / 365 for i in range(k)])
+    p.append(vjerojatnost)
+
+# Kreiranje grafa
+plt.figure(figsize=(8, 6))
+plt.plot(range(1, 101), p, marker='o', markersize=4, linestyle='-')
+plt.xlabel("Broj ljudi")
+plt.ylabel("Vjerojatnost višestrukih rođendana")
+plt.title("Vjerojatnost višestrukih rođendana u ovisnosti o broju ljudi")
+plt.grid(True)
+plt.show()
+
+# R
+# Postavljanje širine konzole radi bolje čitljivosti
+options(width = 75)
+
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+set.seed(42)
+
+# Generiranje uzorka rođendana za 23 ljudi s ponavljanjem (moguće su iste vrijednosti)
+rodjendani <- sample(1:365, 23, replace = TRUE)
+
+# Ispis uzorka rođendana
+rodjendani
+
+# Python
+import random
+
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+random.seed(42)
+
+# Generiranje uzorka rođendana za 23 ljudi s ponavljanjem (moguće su iste vrijednosti)
+rodjendani = [random.randint(1, 365) for _ in range(23)]
+
+# Ispis uzorka rođendana
+print(rodjendani)
+
+# R
+
+# Generiranje velikog broja simulacija
+simulacije <- replicate(10^5, max(table(sample(1:365, 23, replace=TRUE)))
+
+# Izračun postotka simulacija u kojima barem dvije osobe dijele isti rođendan
+postotak_simulacija_s_dvostrukim_rodjendanom <- sum(simulacije >= 2) / 10^5
+
+# Ispis rezultata simulacije i vjerojatnosti izračunate pomoću pbirthday
+postotak_simulacija_s_dvostrukim_rodjendanom
+pbirthday(23)[1]
+
+# Python
+import random
+import numpy as np
+
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+random.seed(42)
+
+# Generiranje velikog broja simulacija
+broj_simulacija = 10**5
+simulacije = [max(np.bincount([random.randint(1, 365) for _ in range(23)])) for _ in range(broj_simulacija)]
+
+# Izračun postotka simulacija u kojima barem dvije osobe dijele isti rođendan
+postotak_simulacija_s_dvostrukim_rodjendanom = sum(np.array(simulacije) >= 2) / broj_simulacija
+
+# Ispis rezultata simulacije
+print(postotak_simulacija_s_dvostrukim_rodjendanom)
+
+# Ispis vjerojatnosti izračunate pomoću pbirthday
+vjerojatnost_rođendana = 1 - np.prod(1 - np.arange(1, 366) / 365)
+print(vjerojatnost_rođendana)
+### TREĆE POGLAVLJE JE GOTOVO
