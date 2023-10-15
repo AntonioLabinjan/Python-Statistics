@@ -302,3 +302,172 @@ for i in range(brpon):
 
 # Ispisujemo procijenjenu vjerojatnost
 print("Procijenjena vjerojatnost je", brojac / brpon)
+
+# R
+# Postavljanje početnog stanja generatora slučajnih brojeva
+set.seed(42)
+
+# Generiranje niza dij1 koji sadrži 20 nezavisnih bacanja prvog djeteta
+dij1 <- sample(c(0, 1), 20, replace = TRUE)
+
+# Generiranje niza dij2 koji sadrži 20 nezavisnih bacanja drugog djeteta
+dij2 <- sample(c(0, 1), 20, replace = TRUE)
+
+# Formiranje vektora dijoba koji označava je li barem jedno dijete žensko
+dijoba <- dij1 * dij2
+
+# Formiranje podataka o djeci
+dijpom <- data.frame(dij1, dij2)
+
+# Računanje vektora dijjedno koji označava imaju li oba djeteta barem jedno žensko dijete
+dijjedno <- apply(dijpom, 1, FUN = max)
+
+# Izračun uvjetne vjerojatnosti
+cat("Tražena uvjetna vjerojatnost je", sum(dijoba) / sum(dijjedno))
+
+# Python
+import random
+
+# Postavljanje početnog stanja generatora slučajnih brojeva
+random.seed(42)
+
+# Generiranje niza dij1 koji sadrži 20 nezavisnih bacanja prvog djeteta
+dij1 = [random.choice([0, 1]) for _ in range(20)]
+
+# Generiranje niza dij2 koji sadrži 20 nezavisnih bacanja drugog djeteta
+dij2 = [random.choice([0, 1]) for _ in range(20)]
+
+# Formiranje vektora dijoba koji označava je li barem jedno dijete žensko
+dijoba = [d1 * d2 for d1, d2 in zip(dij1, dij2)]
+
+# Formiranje podataka o djeci
+dijpom = list(zip(dij1, dij2))
+
+# Računanje vektora dijjedno koji označava imaju li oba djeteta barem jedno žensko dijete
+dijjedno = [max(d1, d2) for d1, d2 in dijpom]
+
+# Izračun uvjetne vjerojatnosti
+print("Tražena uvjetna vjerojatnost je", sum(dijoba) / sum(dijjedno))
+
+# R
+set.seed(42)
+
+# Broj slučajeva u kojima barem jedno dijete je žensko
+nC <- sum(dij1 == 1 | dij2 == 1)
+
+# Broj slučajeva u kojima oba djeteta su ženska
+nAC <- sum(dij1 == 1 & dij2 == 1)
+
+# Izračun uvjetne vjerojatnosti
+cat("Tražena uvjetna vjerojatnost je", nAC / nC)
+
+# Python
+import numpy as np
+
+# Postavljanje početnog stanja generatora slučajnih brojeva
+np.random.seed(42)
+
+# Generiranje niza dij1 koji sadrži 20 nezavisnih bacanja prvog djeteta
+dij1 = np.random.choice([0, 1], 20, replace=True)
+
+# Generiranje niza dij2 koji sadrži 20 nezavisnih bacanja drugog djeteta
+dij2 = np.random.choice([0, 1], 20, replace=True)
+
+# Izračun broja slučajeva u kojima barem jedno dijete je žensko
+nC = np.sum((dij1 == 1) | (dij2 == 1))
+
+# Izračun broja slučajeva u kojima oba djeteta su ženska
+nAC = np.sum((dij1 == 1) & (dij2 == 1))
+
+# Izračun uvjetne vjerojatnosti
+print("Tražena uvjetna vjerojatnost je", nAC / nC)
+
+# R
+set.seed(42)
+
+dij1 <- sample(c(0, 1), 100000, replace=TRUE)
+dij2 <- sample(c(0, 1), 100000, replace=TRUE)
+
+dijoba <- dij1 * dij2
+dijpom <- data.frame(dij1, dij2)
+dijjedno <- apply(dijpom, 1, FUN = max)
+
+cat("Tražena uvjetna vjerojatnost je", sum(dijoba) / sum(dijjedno))
+
+set.seed(42)
+
+dij1 <- sample(c(0, 1), 100000, replace=TRUE)
+dij2 <- sample(c(0, 1), 100000, replace=TRUE)
+
+nC <- sum(dij1 == 1 | dij2 == 1)
+nAC <- sum(dij1 == 1 & dij2 == 1)
+
+cat("Tražena uvjetna vjerojatnost je", nAC / nC)
+
+# Python
+import random
+
+random.seed(42)
+
+dij1 = [random.choice([0, 1]) for _ in range(100000)]
+dij2 = [random.choice([0, 1]) for _ in range(100000)]
+
+dijoba = [d1 * d2 for d1, d2 in zip(dij1, dij2)]
+dijpom = list(zip(dij1, dij2))
+dijjedno = [max(d1, d2) for d1, d2 in dijpom]
+
+uvjetna_vjerojatnost = sum(dijoba) / sum(dijjedno)
+
+print(f"Tražena uvjetna vjerojatnost je {uvjetna_vjerojatnost}")
+
+import random
+
+random.seed(42)
+
+dij1 = [random.choice([0, 1]) for _ in range(100000)]
+dij2 = [random.choice([0, 1]) for _ in range(100000)]
+
+nC = sum(d1 == 1 or d2 == 1 for d1, d2 in zip(dij1, dij2))
+nAC = sum(d1 == 1 and d2 == 1 for d1, d2 in zip(dij1, dij2))
+
+uvjetna_vjerojatnost = nAC / nC
+
+print(f"Tražena uvjetna vjerojatnost je {uvjetna_vjerojatnost}")
+
+# R
+set.seed(42)
+kug <- 0
+
+nov <- sample(c(0, 1), 100000, replace=TRUE, prob=c(0.45, 0.55))
+
+for (i in 1:100000) {
+  if (nov[i] == 0) {
+    kug[i] <- sample(c("p", "c"), 1, replace=TRUE, prob = c(1/3, 2/3))
+  } else {
+    kug[i] <- sample(c("p", "c"), 1, replace=TRUE, prob = c(2/3, 1/3))
+  }
+}
+
+nA <- sum(kug == "p")
+nAH <- sum(nov == 0 & kug == "p")
+
+cat("Tražena uvjetna vjerojatnost je", nAH / nA)
+
+# Python
+import random
+
+random.seed(42)
+kug = [0] * 100000
+
+nov = [random.choices([0, 1], [0.45, 0.55])[0] for _ in range(100000)]
+
+for i in range(100000):
+    if nov[i] == 0:
+        kug[i] = random.choices(["p", "c"], [1/3, 2/3])[0]
+    else:
+        kug[i] = random.choices(["p", "c"], [2/3, 1/3])[0]
+
+nA = kug.count("p")
+nAH = sum(1 for i in range(100000) if nov[i] == 0 and kug[i] == "p")
+
+print("Tražena uvjetna vjerojatnost je", nAH / nA)
