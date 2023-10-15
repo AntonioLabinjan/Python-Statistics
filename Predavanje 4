@@ -1,0 +1,108 @@
+Ovdje nema programskih djelova sve do djela 4.6 -> Primjena R-a za računanje uvjetnih vjerojatnosti
+# R
+Pomoću funkcija sample() i replicate() možemo simulirati bacanje kockice
+# Postavljanje početnog stanja generatora slučajnih brojeva (za reproduktivnost)
+set.seed(42)
+
+# Simulacija bacanja četiri kockice 12 puta
+DePom <- replicate(12, sample(6, 4, replace = TRUE))
+
+# Ispis rezultata simulacije
+DePom
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    1    2    1    6    3    4    4    2    3     4     4     2
+ [2,]    5    4    4    4    1    5    2    1    6     6     5     3
+ [3,]    1    2    1    2    1    5    4    2    2     2     4     1
+ [4,]    1    2    5    2    3    5    3    6    4     5     2     2
+
+Sjetimo se da bacanja s ponavljanjem simuliramo tako da u funkciji sample postavimo argument replace = TRUE. Funkcija set.seed služi za postavljanje početnog stanja generatora pseudoslučajnih brojeva u R, što nam omogućava reproducibilnost generiranih brojeva. Ova aproksimacija se koristi za simuliranje neovisnih bacanja ili izvlačenja.
+
+# Dijeljenje svih elemenata varijable DePom s 6
+DePom6 <- DePom %/% 6
+
+# Ispis rezultata dijeljenja
+print(DePom6)
+
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    0    0    0    1    0    0    0    0    0     0     0     0
+ [2,]    0    0    0    0    0    0    0    0    1     1     0     0
+ [3,]    0    0    0    0    0    0    0    0    0     0     0     0
+ [4,]    0    0    0    0    0    0    0    1    0     0     0     0
+
+# Korištenje funkcije apply za izračun maksimalnih vrijednosti u svakom stupcu
+maksimalne_vrijednosti <- apply(DePom6, 2, FUN = max)
+
+# Ispis maksimalnih vrijednosti
+print(maksimalne_vrijednosti)
+ [1] 0 0 0 1 0 0 0 1 1 1 0
+
+# Možemo izračunati i prosječnu vjerojatnost kod višestrukog bacanja kockica
+# Izračunajte prosječnu vjerojatnost višestrukog bacanja kockica
+prosjecna_vjerojatnost <- sum(apply(DePom6, 2, FUN = max)) / 12
+
+# Ispis prosječne vjerojatnosti
+print(prosjecna_vjerojatnost)
+
+Ovaj ispis će prikazati prosječnu vjerojatnost:
+[1] 0.3333333
+
+Sada ponovimo isti postupak s 100.000 ponavljanja:
+# Postavljanje početnog stanja generatora slučajnih brojeva
+set.seed(42)
+
+# Generiranje 100.000 simulacija višestrukog bacanja kockica
+DeMere1 <- replicate(100000, sample(6, 4, replace = TRUE))
+
+# Izračun maksimalnih vrijednosti u svakom nizu i suma tih maksimalnih vrijednosti
+maksimalne_vrijednosti <- apply(DeMere1 %/% 6, 2, FUN = max)
+prosjecna_vjerojatnost_100k <- sum(maksimalne_vrijednosti) / 100000
+
+# Ispis prosječne vjerojatnosti za 100.000 ponavljanja
+print(prosjecna_vjerojatnost_100k)
+
+Ovaj ispis će prikazati prosječnu vjerojatnost za 100.000 ponavljanja:
+[1] 0.51748
+Ovaj je ispis dobiven na temelju puno više ponavljanja i bliži je točnoj vrijednosti
+
+# Python
+import numpy as np
+
+# Postavljanje početnog stanja generatora slučajnih brojeva
+np.random.seed(42)
+
+# Simulacija bacanja četiri kockice 12 puta
+broj_bacanja = 12
+broj_kockica = 4
+DePom = np.random.choice(6, size=(broj_kockica, broj_bacanja), replace=True)
+
+# Ispis rezultata simulacije
+print(DePom)
+
+# Dijeljenje svih elemenata matrice DePom s 6
+DePom6 = DePom // 6
+
+# Ispis rezultata dijeljenja
+print(DePom6)
+
+# Izračun maksimalnih vrijednosti u svakom stupcu
+maksimalne_vrijednosti = np.max(DePom6, axis=0)
+
+# Ispis maksimalnih vrijednosti
+print(maksimalne_vrijednosti)
+
+# Izračun prosječne vjerojatnosti kod višestrukog bacanja kockica
+prosjecna_vjerojatnost = np.mean(maksimalne_vrijednosti)
+
+# Ispis prosječne vjerojatnosti
+print(prosjecna_vjerojatnost)
+
+# Ponovno simulirajte s 100.000 ponavljanja
+broj_simulacija = 100000
+DeMere1 = np.random.choice(6, size=(broj_kockica, broj_simulacija), replace=True)
+
+# Izračun maksimalnih vrijednosti u svakom nizu i prosječna vjerojatnost
+maksimalne_vrijednosti_100k = np.max(DeMere1 // 6, axis=0)
+prosjecna_vjerojatnost_100k = np.mean(maksimalne_vrijednosti_100k)
+
+# Ispis prosječne vjerojatnosti za 100.000 ponavljanja
+print(prosjecna_vjerojatnost_100k)
