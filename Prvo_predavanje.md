@@ -113,6 +113,7 @@ num2 = 2.5
 
 rezultat = num1 > num2
 
+print(type(rezultat)) # bool
 print(rezultat) # false
 
 # R
