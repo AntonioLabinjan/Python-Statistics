@@ -8,7 +8,7 @@ This will only contain a readme file
 5
 
 # Python
-Print(2+3)
+print(2+3)
 # Daje rezultat:
 5
 
